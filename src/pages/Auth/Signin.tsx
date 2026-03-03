@@ -97,7 +97,7 @@ export const SignIn = () => {
           <div>
             <div className="flex items-center gap-3 mb-4 md:mb-3 lg:mb-2">
               <div className="hidden lg:block absolute inset-0 pointer-events-none">
-                <div className="absolute top-10 border border-white w-[500px] h-[500px] bg-[#00B8DB33] rounded-full blur-[100px]" />
+                <div className="absolute top-10 border border-white w-125 h-125 bg-[#00B8DB33] rounded-full blur-[100px]" />
               </div>
               <div className="relative inline-block">
                 <div className="w-15 h-15 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-linear-to-br from-[#2B7FFF] to-[#00B8DB] rounded-2xl flex items-center justify-center">
