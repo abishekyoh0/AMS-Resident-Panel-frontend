@@ -1,15 +1,9 @@
 import { useState, useRef } from "react";
-import shield from "../../assets/signin/setting.png";
-import admin from "../../assets/signin/admin.png";
-import user from "../../assets/signin/user.png";
-import tick from "../../assets/signin/tickadmin.png";
-import eye from "../../assets/signin/eye.png";
-import lock from "../../assets/signin/lock.png";
 import { COLORS, FONTSIZE, WEIGHT } from "../../constent/uiconstent";
 import { useAuth } from "../../components/Auth/AuthContext";
-import top from "../../assets/signin/topimg.png";
-import orange from "../../assets/signin/orange.png";
 import { toast } from "react-toastify";
+import admin from "../../assets/signin/home.png";
+import tick from "../../assets/signin/tickadmin.png";
 
 export const SignIn = () => {
   const [username, setUsername] = useState("");
@@ -97,31 +91,26 @@ export const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(#0F1A1E,#0F2A2E,#141E1E)] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[linear-gradient(#0F1A1E,#0F2A2E,#141E1E)] flex items-center justify-center px-4" style={{color: COLORS.primary_white}}>
       <div className="w-full max-w-7xl mx-auto flex flex-col md:flex-row justify-between">
         <div className="flex-1 flex flex-col justify-between py-3 lg:py-3 px-4 lg:px-4 md:order-1">
           <div>
             <div className="flex items-center gap-3 mb-4 md:mb-3 lg:mb-2">
               <div className="hidden lg:block absolute inset-0 pointer-events-none">
-                <div className="absolute top-10 border border-white w-[500px] h-[500px] bg-[#00BBA733] rounded-full blur-[100px]" />
+                <div className="absolute top-10 border border-white w-[500px] h-[500px] bg-[#00B8DB33] rounded-full blur-[100px]" />
               </div>
               <div className="relative inline-block">
-                <div className="w-15 h-15 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-linear-to-br from-[#00B8DB] to-[#00BBA7] rounded-2xl flex items-center justify-center">
+                <div className="w-15 h-15 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-linear-to-br from-[#2B7FFF] to-[#00B8DB] rounded-2xl flex items-center justify-center">
                   <img
                     src={admin}
                     alt="admin"
                     className="w-8 h-8 md:w-6 md:h-6 lg:w-auto lg:h-auto"
                   />
                 </div>
-                <img
-                  src={orange}
-                  alt="tick"
-                  className="absolute -top-2 -right-2 w-5 h-5 lg:w-6 lg:h-6"
-                />
               </div>
               <div>
                 <h1
-                  className={`text-white text-lg md:text-xl lg:text-4xl font-semibold ${FONTSIZE[35]}`}
+                  className={`text-lg md:text-xl lg:text-4xl ${FONTSIZE[36]}`}
                   style={{
                     color: COLORS.primary_white,
                     fontWeight: WEIGHT.seven,
@@ -130,10 +119,10 @@ export const SignIn = () => {
                   Skyline Rentals
                 </h1>
                 <p
-                  className={`text-[#53EAFD] text-xs lg:text-sm ${FONTSIZE[14]}`}
+                  className={`text-[#53EAFD] lg:text-sm ${FONTSIZE[14]}`}
                   style={{ fontWeight: WEIGHT.four }}
                 >
-                  Administrator Console
+                  Resident Portal
                 </p>
               </div>
             </div>
@@ -144,11 +133,11 @@ export const SignIn = () => {
                   className={`${FONTSIZE[40]}`}
                   style={{ fontWeight: WEIGHT.seven }}
                 >
-                  <h2 className="text-white text-xl md:text-2xl lg:text-4xl font-bold mb-2">
-                    Complete Control
+                  <h2 className="text-xl md:text-2xl lg:text-4xl font-bold mb-2">
+                    Welcome to Your
                   </h2>
                   <h2 className="text-xl md:text-2xl lg:text-4xl font-bold mb-3 lg:mb-2 bg-linear-to-r from-[#00D3F3] to-[#00D5BE] bg-clip-text text-transparent">
-                    Of Your Platform
+                    Smart Home Portal
                   </h2>
                 </div>
                 <p
@@ -158,20 +147,18 @@ export const SignIn = () => {
                     fontWeight: WEIGHT.four,
                   }}
                 >
-                  Master dashboard with comprehensive control over buildings,
-                  users, complaints, visitors, invoices, and emergency
-                  management.
+                  Access your apartment dashboard, manage complaints, track 
+                  visitors, and stay connected with your community.
                 </p>
               </div>
 
               <div className="space-y-3 md:space-y-1.5 lg:space-y-3 mb-4 md:mb-3 lg:mb-3">
                 {[
-                  "Complete system administration",
-                  "User & role management",
-                  "Building & unit configuration",
-                  "Advanced analytics & reporting",
-                  "Emergency control center",
-                  "System-wide notifications",
+                  "View and pay invoices online",
+                  "Submit and track maintenance requests",
+                  "Manage visitor approvals",
+                  "Access entry history and reports",
+                  "Receive real-time notifications",
                 ].map((feature, index) => (
                   <div key={index} className="flex items-center gap-3">
                     <img
@@ -196,26 +183,21 @@ export const SignIn = () => {
 
           <div className="mt-1 hidden md:block border-t-[1.85px] border-t-[#FFFFFF1A] rounded-2xl p-3 md:p-3 lg:p-4 bg-[#FFFFFF0D] backdrop-blur-sm w-full lg:max-w-md lg:mx-0">
             <div className="flex items-center gap-3">
-              <img
+              {/* <img
                 src={shield}
                 alt=""
                 className="w-6 h-6 md:w-6 md:h-6 lg:w-auto lg:h-auto"
-              />
+              /> */}
               <div>
                 <div className="flex items-center gap-2">
-                  <img
-                    src={top}
-                    alt="admin"
-                    className="w-4 h-4 md:w-4 md:h-4 lg:w-5 lg:h-5"
-                  />
                   <h3
-                    className={`text-white font-semibold text-xs md:text-xs lg:text-base ${FONTSIZE[16]}`}
+                    className={`font-semibold text-xs md:text-xs lg:text-base ${FONTSIZE[16]}`}
                     style={{
                       fontWeight: WEIGHT.seven,
                       color: COLORS.primary_white,
                     }}
                   >
-                    Administrator Access
+                     Your Digital Home
                   </h3>
                 </div>
                 <p
@@ -225,42 +207,12 @@ export const SignIn = () => {
                     color: COLORS.secoundy_gray,
                   }}
                 >
-                  Protected with two-factor authentication
+                  Everything you need, right at your fingertips.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="hidden mt-2 md:block border-t-[1.85px] border-t-[#FDC7004D] rounded-2xl p-4 md:p-2.5 lg:p-4 bg-[#F0B1001A] backdrop-blur-sm max-w-md mx-auto lg:mx-0">
-            <div className="flex items-center gap-3">
-              <img
-                src={top}
-                alt=""
-                className="w-6 h-6 md:w-6 md:h-6 lg:w-auto lg:h-auto"
-              />
-              <div>
-                <h3
-                  className={`text-white font-semibold text-xs md:text-xs lg:text-base ${FONTSIZE[16]}`}
-                  style={{
-                    fontWeight: WEIGHT.seven,
-                    color: COLORS.primary_white,
-                  }}
-                >
-                  Enhanced Security
-                </h3>
-                <p
-                  className={`text-gray-400 text-xs lg:text-sm ${FONTSIZE[14]}`}
-                  style={{
-                    fontWeight: WEIGHT.four,
-                    color: COLORS.secoundy_gray,
-                  }}
-                >
-                  All admin sessaions are monitored and logged for security
-                  purposes.
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div className="flex-1 flex items-center justify-center p-4 md:p-3 lg:p-8 md:order-2">
@@ -270,7 +222,7 @@ export const SignIn = () => {
                 <>
                   <div className="mb-5 lg:mb-6">
                     <h3
-                      className={`text-white text-xl lg:text-2xl font-semibold mb-2 ${FONTSIZE[30]}`}
+                      className={`text-xl lg:text-2xl font-semibold mb-2 ${FONTSIZE[30]}`}
                       style={{
                         fontWeight: WEIGHT.seven,
                         color: COLORS.primary_white,
@@ -311,18 +263,18 @@ export const SignIn = () => {
                       </label>
                       <div className="relative" style={{ color: COLORS.inbox }}>
                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#6A7282]">
-                          <img
+                          {/* <img
                             src={user}
                             alt=""
                             className="w-4 h-4 lg:w-auto lg:h-auto"
-                          />
+                          /> */}
                         </div>
                         <input
                           type="text"
                           value={username}
                           onChange={(e) => setUsername(e.target.value)}
                           placeholder="Administrator username"
-                          className="w-full bg-[#FFFFFF0D] border-t-[1.85px] border-t-[#FFFFFF1A] rounded-xl px-12 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FFFFFF1A] transition-all text-sm lg:text-base border border-[#FFFFFF1A]"
+                          className="w-full bg-[#FFFFFF0D] border-t-[1.85px] border-t-[#FFFFFF1A] rounded-xl px-12 py-3 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FFFFFF1A] transition-all text-sm lg:text-base border border-[#FFFFFF1A]"
                           required
                         />
                       </div>
@@ -340,18 +292,18 @@ export const SignIn = () => {
                       </label>
                       <div className="relative" style={{ color: COLORS.inbox }}>
                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#6A7282]">
-                          <img
+                          {/* <img
                             src={lock}
                             alt=""
                             className="w-4 h-4 lg:w-auto lg:h-auto"
-                          />
+                          /> */}
                         </div>
                         <input
                           type={showPassword ? "text" : "password"}
                           value={accessCode}
                           onChange={(e) => setAccessCode(e.target.value)}
                           placeholder="Enter admin password"
-                          className="w-full bg-[#FFFFFF0D] border-t-[1.85px] border-t-[#FFFFFF1A] rounded-xl px-12 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FFFFFF1A] transition-all text-sm lg:text-base"
+                          className="w-full bg-[#FFFFFF0D] border-t-[1.85px] border-t-[#FFFFFF1A] rounded-xl px-12 py-3 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FFFFFF1A] transition-all text-sm lg:text-base"
                           required
                         />
                         <button
@@ -364,11 +316,11 @@ export const SignIn = () => {
                           onClick={() => setShowPassword(!showPassword)}
                           className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors cursor-pointer"
                         >
-                          <img
+                          {/* <img
                             src={eye}
                             alt=""
                             className="w-4 h-4 lg:w-auto lg:h-auto"
-                          />
+                          /> */}
                         </button>
                       </div>
                     </div>
@@ -415,7 +367,7 @@ export const SignIn = () => {
 
                     <button
                       type="submit"
-                      className={`w-full bg-linear-to-r from-[#00B8DB] to-[#00BBA7] hover:from-[#00B8DB]/80 hover:to-[#00BBA7]/70 text-white font-semibold py-3 rounded-xl transition-all duration-200 shadow-lg shadow-[#00B8DB40] text-sm lg:text-base cursor-pointer ${FONTSIZE[16]}`}
+                      className={`w-full bg-linear-to-r from-[#00B8DB] to-[#00BBA7] hover:from-[#00B8DB]/80 hover:to-[#00BBA7]/70 font-semibold py-3 rounded-xl transition-all duration-200 shadow-lg shadow-[#00B8DB40] text-sm lg:text-base cursor-pointer ${FONTSIZE[16]}`}
                       style={{
                         fontWeight: WEIGHT.four,
                         color: COLORS.primary_white,
@@ -429,7 +381,7 @@ export const SignIn = () => {
                 <>
                   <div className="mb-4 md:mb-3 lg:mb-6">
                     <h3
-                      className={`text-white text-xl lg:text-2xl font-semibold mb-1 ${FONTSIZE[30]}`}
+                      className={`text-xl lg:text-2xl font-semibold mb-1 ${FONTSIZE[30]}`}
                       style={{
                         fontWeight: WEIGHT.seven,
                         color: COLORS.primary_white,
@@ -446,7 +398,7 @@ export const SignIn = () => {
 
                     <div className="rounded-2xl p-3 md:p-3 lg:p-5 text-center">
                       <h4
-                        className={`text-white font-semibold text-base mb-1 ${FONTSIZE[22]}`}
+                        className={`font-semibold text-base mb-1 ${FONTSIZE[22]}`}
                         style={{
                           fontWeight: WEIGHT.six,
                           color: COLORS.primary_white,
@@ -499,7 +451,7 @@ export const SignIn = () => {
                             }
                             onKeyDown={(e) => handleOtpKeyDown(index, e)}
                             onPaste={(e) => handleOtpPaste(e, index)}
-                            className="flex-1 min-w-0 aspect-square text-center text-white text-base md:text-sm lg:text-lg font-semibold bg-[#FFFFFF0D] border border-[#FFFFFF1A] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00B8DB] transition-all"
+                            className="flex-1 min-w-0 aspect-square text-center text-base md:text-sm lg:text-lg font-semibold bg-[#FFFFFF0D] border border-[#FFFFFF1A] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00B8DB] transition-all"
                             style={{ caretColor: "#00B8DB" }}
                           />
                         ))}
@@ -534,7 +486,7 @@ export const SignIn = () => {
                           setError("");
                           setOtp(["", "", "", "", "", ""]);
                         }}
-                        className={`flex-1 border border-[#FFFFFF1A] bg-[#FFFFFF0D] hover:bg-[#FFFFFF1A] text-white font-semibold py-3 rounded-xl transition-all duration-200 text-sm lg:text-base cursor-pointer ${FONTSIZE[16]}`}
+                        className={`flex-1 border border-[#FFFFFF1A] bg-[#FFFFFF0D] hover:bg-[#FFFFFF1A] font-semibold py-3 rounded-xl transition-all duration-200 text-sm lg:text-base cursor-pointer ${FONTSIZE[16]}`}
                         style={{
                           fontWeight: WEIGHT.seven,
                           color: COLORS.primary_white,
@@ -544,7 +496,7 @@ export const SignIn = () => {
                       </button>
                       <button
                         type="submit"
-                        className={`flex-1 bg-linear-to-r from-[#00B8DB] to-[#00BBA7] hover:from-[#00B8DB]/80 hover:to-[#00BBA7]/70 text-white font-semibold py-3 rounded-xl transition-all duration-200 shadow-lg shadow-[#00B8DB40] text-sm lg:text-base cursor-pointer ${FONTSIZE[16]}`}
+                        className={`flex-1 bg-linear-to-r from-[#00B8DB] to-[#00BBA7] hover:from-[#00B8DB]/80 hover:to-[#00BBA7]/70 font-semibold py-3 rounded-xl transition-all duration-200 shadow-lg shadow-[#00B8DB40] text-sm lg:text-base cursor-pointer ${FONTSIZE[16]}`}
                         style={{
                           fontWeight: WEIGHT.seven,
                           color: COLORS.primary_white,
@@ -563,7 +515,7 @@ export const SignIn = () => {
         <div className="md:hidden px-4 pb-6 space-y-6">
           <div className="mb-8">
             <h2
-              className={`text-white text-3xl font-bold mb-2 ${FONTSIZE[48]}`}
+              className={`text-3xl font-bold mb-2 ${FONTSIZE[48]}`}
               style={{ fontWeight: WEIGHT.seven }}
             >
               Complete Control
@@ -593,7 +545,7 @@ export const SignIn = () => {
                   "System-wide notifications",
             ].map((feature, index) => (
               <div key={index} className="flex items-center gap-3">
-                <img src={tick} alt="" className="w-4 h-4" />
+                {/* <img src={tick} alt="" className="w-4 h-4" /> */}
                 <span
                   className={`text-gray-300 text-sm ${FONTSIZE[16]}`}
                   style={{ color: COLORS.smalltext, fontWeight: WEIGHT.four }}
@@ -606,10 +558,10 @@ export const SignIn = () => {
 
           <div className="border border-emerald-800/50 rounded-2xl p-4 bg-emerald-950/30 backdrop-blur-sm">
             <div className="flex items-center gap-3">
-              <img src={shield} alt="" className="w-8 h-8" />
+              {/* <img src={shield} alt="" className="w-8 h-8" /> */}
               <div>
                 <h3
-                  className={`text-white font-semibold text-sm ${FONTSIZE[16]}`}
+                  className={`font-semibold text-sm ${FONTSIZE[16]}`}
                   style={{
                     fontWeight: WEIGHT.seven,
                     color: COLORS.primary_white,
@@ -632,10 +584,10 @@ export const SignIn = () => {
 
           <div className="border-t-[1.85px] border-t-[#FDC7004D] rounded-2xl p-4 bg-[#F0B1001A] backdrop-blur-sm">
             <div className="flex items-center gap-3">
-              <img src={top} alt="" className="w-8 h-8" />
+              {/* <img src={top} alt="" className="w-8 h-8" /> */}
               <div>
                 <h3
-                  className={`text-white font-semibold text-sm ${FONTSIZE[16]}`}
+                  className={`font-semibold text-sm ${FONTSIZE[16]}`}
                   style={{
                     fontWeight: WEIGHT.seven,
                     color: COLORS.primary_white,
