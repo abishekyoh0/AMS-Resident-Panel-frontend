@@ -31,6 +31,8 @@ export default function AppRoutes() {
         >
           <Route index element={<Dashboard />} />
           <Route path="/vehicles&parking" element={<VehicleManagement />} />
+          <Route path="/family&tenants" element={<FamilyTenants />} />
+          <Route path="/visitors" element={<VisitorManagement />} />
           <Route path="/add-vehicle" element={<AddVehicle setOpenModal={function (): void {
             throw new Error("Function not implemented.");
           } } />} />
