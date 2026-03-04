@@ -165,7 +165,9 @@ function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
 
                 {vehicle.parking ? (
                     <div className="bg-green-900/30 border border-green-600 p-4 rounded-xl flex items-center gap-3">
-                        <span className="text-xl">🅿️</span>
+                        <span className="text-xl">
+                            <img src={Parking} alt="" />
+                        </span>
                         <div>
                             <p className="text-green-400 text-sm">Parking Assigned</p>
                             <p className="font-semibold">{vehicle.parking}</p>

@@ -29,7 +29,7 @@ export default function AppRoutes() {
           }
         >
           <Route index element={<Dashboard />} />
-          <Route path="/vehicles & parking" element={<VehicleManagement />} />
+          <Route path="/vehicles&parking" element={<VehicleManagement />} />
           <Route path="/add-vehicle" element={<AddVehicle setOpenModal={function (): void {
             throw new Error("Function not implemented.");
           } } />} />
