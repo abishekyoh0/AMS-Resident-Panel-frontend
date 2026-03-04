@@ -1,5 +1,6 @@
 import { useState } from "react";
 import car from "../../assets/VehicleManagement/car.png"
+import { X } from "lucide-react";
 
 type Props = {
     setOpenModal: (value: boolean) => void;
@@ -41,10 +42,15 @@ export default function AddVehicleModal({ setOpenModal }: Props) {
         <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50 p-4">
 
             <div className="w-full max-w-xl overflow-y-auto h-125 bg-linear-to-r from-[#0A0A1E] to-[#0F0520] rounded-2xl border border-gray-700 p-8 shadow-2xl">
-
-                <h2 className="text-2xl font-semibold mb-6 flex items-center gap-4">
-                    <img src={car} alt="" /> Add Vehicle
-                </h2>
+                <div className="flex justify-between items-center">
+                    <h2 className="text-2xl font-semibold mb-6 flex items-center gap-4">
+                        <img src={car} alt="" /> Add Vehicle
+                    </h2>
+                    <button onClick={() => setOpenModal(false)}
+                        className="text-gray-400 hover:text-white cursor-pointer mb-6">
+                        <X />
+                    </button>
+                </div>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
 
