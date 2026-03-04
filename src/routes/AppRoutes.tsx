@@ -7,7 +7,8 @@ import { SignIn } from "../pages/Auth/Signin";
 import { Dashboard } from "../pages/Dashboard/Dashboard";
 import VehicleManagement from "../pages/VehicleManagement/VehicleManagement";
 import AddVehicle from "../components/VehicleManagement/AddVehicle";
-
+import FamilyTenants from "../pages/FamilyTenants/FamilyTenants"
+import VisitorManagement from '../pages/VisitorManagement/VisitorManagement';
 
 export default function AppRoutes() {
   return (
