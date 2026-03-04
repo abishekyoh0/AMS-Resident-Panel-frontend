@@ -10,7 +10,7 @@ export default function Profile() {
   const [isEditMode, setIsEditMode] = useState(false);
 
   return (
-    <div className="bg-black min-h-screen text-white p-4 sm:p-6">
+    <div className="text-white">
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 gap-4">
         <div>
           <h1
