@@ -2,14 +2,14 @@ export default function MoveInForm() {
 
     return (
 
-        <div className="min-h-screen bg-black text-white p-6 flex justify-center">
+        <div className="min-h-screen text-white p-6 flex justify-center">
 
             <div className="max-w-4xl w-full space-y-6">
 
                 <h2 className="text-3xl font-bold">New Move-IN Form</h2>
 
 
-                <div className="bg-gray-900 p-6 rounded-xl">
+                <div className="p-6 rounded-xl">
 
                     <h3 className="text-lg mb-4">Tenant Information</h3>
 
@@ -25,7 +25,7 @@ export default function MoveInForm() {
                 </div>
 
 
-                <div className="bg-gray-900 p-6 rounded-xl">
+                <div className="p-6 rounded-xl">
 
                     <h3 className="mb-4">Property Information</h3>
 
@@ -45,7 +45,7 @@ export default function MoveInForm() {
                 </div>
 
 
-                <div className="bg-gray-900 p-6 rounded-xl">
+                <div className="p-6 rounded-xl">
 
                     <h3 className="mb-4">Security Deposit</h3>
 
@@ -56,7 +56,8 @@ export default function MoveInForm() {
 
                 <div className="flex justify-end gap-4">
 
-                    <button className="px-6 py-2 bg-gray-700 rounded-lg">
+                    <button onClick={() => window.history.back()}
+                     className="px-6 py-2 bg-gray-700 rounded-lg">
                         Cancel
                     </button>
 

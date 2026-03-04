@@ -13,7 +13,7 @@ export const SignIn = () => {
     const [usermail, setUserMail] = useState("");
     const [keepSignedIn, setKeepSignedIn] = useState(false);
     const [error, setError] = useState("");
-    const [step, setStep] = useState<"login" | "phone number" | "otp" | "movein">("login");
+    const [step, setStep] = useState<"login" | "otp" | "movein">("login");
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
     const [showEmailInput, setShowEmailInput] = useState(false);
     const otpRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -23,6 +23,7 @@ export const SignIn = () => {
         e.preventDefault();
         setError("");
         setStep("otp");
+        setStep("movein");
         toast.success("OTP sent successfully!");
     };
 
@@ -81,6 +82,7 @@ export const SignIn = () => {
                 token: "mock-jwt-token",
             };
             login(mockResponse.user, mockResponse.token);
+            setStep("movein");
         } catch (err) {
             setError("Invalid OTP");
             toast.error("Invalid OTP. Please try again.");
@@ -381,6 +383,8 @@ export const SignIn = () => {
 
 
                                 </>
+                            ) : step === "otp" ? (
+                                <MoveInForm />
                             ) : (
                                 <>
                                     <div className="mb-4 md:mb-3 lg:mb-6">
@@ -498,7 +502,7 @@ export const SignIn = () => {
                                             >
                                                 ← Sign In
                                             </button>
-                                            <button onClick={() => setStep("movein")}
+                                            <button
                                                 type="submit"
                                                 className={`flex-1 bg-linear-to-r from-[#00B8DB] to-[#00BBA7] hover:from-[#00B8DB]/80 hover:to-[#00BBA7]/70 font-semibold py-3 rounded-xl transition-all duration-200 shadow-lg shadow-[#00B8DB40] text-sm lg:text-base cursor-pointer ${FONTSIZE[16]}`}
                                                 style={{
@@ -511,9 +515,6 @@ export const SignIn = () => {
                                         </div>
                                     </form>
                                 </>
-                            )}
-                            { step === "movein" && (
-                                <MoveInForm />
                             )}
                         </div>
                     </div>
