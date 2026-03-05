@@ -77,7 +77,7 @@ export default function InvoicesPage() {
                 <p className={`${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>{invoice.id}</p>
 
                 <p className={`px-3 py-1 rounded-full ${FONTSIZE[12]}
-              ${invoice.status === "PAID" ? "bg-[#00C95033] border border-[#00C95066] text-[#05DF72]" : "bg-[#F0B10033] border border-[#F0B10066] text-[#FDC700]"}`}
+                   ${invoice.status === "PAID" ? "bg-[#00C95033] border border-[#00C95066] text-[#05DF72]" : "bg-[#F0B10033] border border-[#F0B10066] text-[#FDC700]"}`}
                   style={{ fontWeight: WEIGHT.seven }}>
                   {invoice.status}
                 </p>
@@ -122,7 +122,7 @@ export default function InvoicesPage() {
               <div>
                 <p className={`${FONTSIZE[14]}`}>Paid</p>
                 <p className={`${FONTSIZE[18]}`} style={{ fontWeight: WEIGHT.seven, color: "#05DF72" }}>
-                  {invoice.status === "PAID" ? `₹${invoice.amount}` : "$0"}
+                  {invoice.status === "PAID" ? `₹${invoice.amount}` : "₹0"}
                 </p>
               </div>
 

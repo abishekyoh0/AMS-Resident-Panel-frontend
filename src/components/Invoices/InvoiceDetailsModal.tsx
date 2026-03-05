@@ -1,58 +1,69 @@
+import { COLORS, FONTSIZE, WEIGHT } from "../../constent/uiconstent";
+import Doc from "../../assets/Invoices/download.png"
 
 export default function InvoiceDetailsModal({ invoice, close }: any) {
-  return (
-    <div className="fixed inset-0 bg-black/70 flex items-center justify-center">
+    return (
+        <div className="fixed inset-0 z-50 bg-[#FFFFFF66] flex items-center justify-center">
 
-      <div className="bg-linear-to-br from-indigo-900 to-black p-6 rounded-xl w-125">
+            <div className="bg-linear-to-br from-[#0A0A1E] to-[#0F0520] border border-[#00D3F280] p-6 rounded-xl w-125">
+                <div className="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 className={`${FONTSIZE[30]}`} style={{ fontWeight: WEIGHT.seven }}>Invoice Details</h2>
+                        <p className={`${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>{invoice.id}</p>
+                    </div>
+                    <p className={`px-3 py-1 rounded-full ${FONTSIZE[14]}
+                        ${invoice.status === "PAID" ? "bg-[#00C95033] border border-[#00C95066] text-[#05DF72]" : "bg-[#F0B10033] border border-[#F0B10066] text-[#FDC700]"}`}
+                        style={{ fontWeight: WEIGHT.seven }}>
+                        {invoice.status}
+                    </p>
+                </div>
 
-        <h2 className="text-xl font-bold mb-4">Invoice Details</h2>
 
-        <div className="bg-gray-900 p-4 rounded mb-4">
+                <div className="bg-[#FFFFFF0D] border-[#FFFFFF1A] p-4 rounded-xl mb-4">
+                    <p className={`mb-5 ${FONTSIZE[20]}`} style={{ fontWeight: WEIGHT.seven }}>Billing Period</p>
+                    <div className="flex gap-25">
+                        <div>
+                            <p className={`${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>Month</p>
+                            <p className={`${FONTSIZE[18]}`} style={{ fontWeight: WEIGHT.seven }}>{invoice.month}</p>
+                        </div>
 
-          <div className="flex justify-between">
-            <div>
-              <p className="text-gray-400 text-sm">Month</p>
-              <p>{invoice.month}</p>
+                        <div>
+                            <p className={`${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>Due Date</p>
+                            <p className={`${FONTSIZE[18]}`} style={{ fontWeight: WEIGHT.seven }}>{invoice.dueDate}</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div className="bg-[#FFFFFF0D] border-[#FFFFFF1A] p-4 rounded-xl">
+
+                    <h3 className={`mb-4 ${FONTSIZE[20]}`} style={{ fontWeight: WEIGHT.seven }}>Charges Breakdown</h3>
+
+                    {invoice.charges.map((c: any, i: number) => (
+                        <div key={i} className="flex justify-between mb-2">
+                            <span className={`${FONTSIZE[16]}`} style={{ color: COLORS.secoundy_gray }}>{c.name}</span>
+                            <span className={`${FONTSIZE[16]}`} style={{ fontWeight: WEIGHT.seven }}>₹{c.amount}</span>
+                        </div>
+                    ))}
+
+                    <div className="flex justify-between mt-4">
+                        <span className={`${FONTSIZE[18]}`} style={{ fontWeight: WEIGHT.seven }}>Total Amount</span>
+                        <span className={`${FONTSIZE[24]}`} style={{ color: "#00D3F2", fontWeight: WEIGHT.seven }}>₹{invoice.amount}</span>
+                    </div>
+
+                </div>
+
+                <button className={`w-full flex justify-center items-center gap-3 bg-[#2B7FFF33] border border-[#51A2FF4D] text-[#51A2FF] mt-4 py-2 rounded-full cursor-pointer ${FONTSIZE[16]}`}
+                    style={{ fontWeight: WEIGHT.seven }}>
+                    <img src={Doc} alt="" /> Download Invoice
+                </button>
+
+                <button onClick={close} className={`w-full mt-3 bg-linear-to-r from-[#00B8DB] to-[#7F22FE] py-2 rounded-full cursor-pointer ${FONTSIZE[16]}`}
+                    style={{ fontWeight: WEIGHT.seven }}>
+                    Close
+                </button>
+
             </div>
-
-            <div>
-              <p className="text-gray-400 text-sm">Due Date</p>
-              <p>{invoice.dueDate}</p>
-            </div>
-          </div>
-
         </div>
-
-        <div className="bg-gray-900 p-4 rounded">
-
-          <h3 className="mb-3 font-semibold">Charges Breakdown</h3>
-
-          {invoice.charges.map((c: any, i: number) => (
-            <div key={i} className="flex justify-between text-sm mb-2">
-              <span>{c.name}</span>
-              <span>${c.amount}</span>
-            </div>
-          ))}
-
-          <div className="flex justify-between mt-4 font-semibold text-cyan-400">
-            <span>Total Amount</span>
-            <span>${invoice.amount}</span>
-          </div>
-
-        </div>
-
-        <button className="w-full bg-blue-600 mt-4 py-2 rounded">
-          Download Invoice
-        </button>
-
-        <button
-          onClick={close}
-          className="w-full mt-3 bg-purple-600 py-2 rounded"
-        >
-          Close
-        </button>
-
-      </div>
-    </div>
-  );
+    );
 }
