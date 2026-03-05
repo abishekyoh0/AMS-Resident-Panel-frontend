@@ -109,5 +109,25 @@ export const invoices: Invoice[] = [
       transactionId: "TXN-123456",
       receipt: "RCP-2025-12"
     }
+  },
+  {
+    id: "INV-2025-11",
+    month: "November 2025",
+    status: "PAID",
+    amount: 4200,
+    dueDate: "2025-12-05",
+    charges: [
+      { name: "Maintenance Charge", amount: 3500 },
+      { name: "Water Charge", amount: 200 },
+      { name: "Parking Charge", amount: 500 }
+    ],
+    payment: {
+      paidAmount: 4200,
+      balance: 0,
+      paymentDate: "2025-11-28",
+      mode: "Bank Transfer",
+      transactionId: "TXN-123457",
+      receipt: "RCP-2025-11"
+    }
   }
 ];
