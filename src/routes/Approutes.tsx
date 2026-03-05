@@ -11,6 +11,7 @@ import FamilyTenants from "../pages/FamilyTenants/FamilyTenants"
 import VisitorManagement from '../pages/VisitorManagement/VisitorManagement';
 import MyProfile from "../pages/Profile/profile";
 
+
 export default function AppRoutes() {
   return (
     <div>
