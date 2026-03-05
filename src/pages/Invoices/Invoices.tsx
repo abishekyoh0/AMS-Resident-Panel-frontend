@@ -123,7 +123,6 @@ export default function InvoicesPage() {
 
       </div>
 
-      {/* Modals */}
 
       {modalType === "view" && selectedInvoice && (
         <InvoiceDetailsModal invoice={selectedInvoice} close={closeModal} />
