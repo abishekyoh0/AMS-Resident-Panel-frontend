@@ -23,7 +23,7 @@ export const SignIn = () => {
         e.preventDefault();
         setError("");
         setStep("otp");
-        setStep("movein");
+        // setStep("movein");
         toast.success("OTP sent successfully!");
     };
 
@@ -271,9 +271,9 @@ export const SignIn = () => {
                                                 >
                                                     Enter Email ID
                                                 </label>
-                                                <div className="relative" style={{ color: COLORS.inbox }}>
+                                                <div className="relative">
                                                     <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#6A7282]">
-                                                        <Mail size={20} />
+                                                        <Mail size={20} style={{ color: COLORS.inbox }} />
                                                     </div>
                                                     <input
                                                         type="email"
@@ -285,19 +285,19 @@ export const SignIn = () => {
                                                     />
                                                 </div>
                                                 <div className="flex justify-center">
-                                                <button
-                                                    type="button"
-                                                    onClick={handlePhoneSubmit}
-                                                    className={`mt-2 hover:text-[#0BA9E4] transition-colors font-medium cursor-pointer ${FONTSIZE[16]}`}>
-                                                    Enter Phone Number
-                                                </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={handlePhoneSubmit}
+                                                        className={`mt-2 hover:text-[#0BA9E4] transition-colors font-medium cursor-pointer ${FONTSIZE[16]}`}>
+                                                        Enter Phone Number
+                                                    </button>
                                                 </div>
                                             </div>
                                         ) : (
 
                                             <div>
                                                 <label
-                                                    className={`text-gray-300 text-sm font-medium mb-2 block ${FONTSIZE[14]}`}
+                                                    className={`mb-2 block ${FONTSIZE[14]}`}
                                                     style={{
                                                         color: COLORS.smalltext,
                                                         fontWeight: WEIGHT.seven,
@@ -305,9 +305,9 @@ export const SignIn = () => {
                                                 >
                                                     Enter Phone number
                                                 </label>
-                                                <div className="relative" style={{ color: COLORS.inbox }}>
-                                                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#6A7282]">
-                                                        <PhoneCall size={20} />
+                                                <div className="relative" >
+                                                    <div className="absolute left-4 top-1/2 -translate-y-1/2">
+                                                        <PhoneCall size={20} style={{ color: COLORS.inbox }} />
                                                     </div>
                                                     <input
                                                         type="tel"
@@ -319,12 +319,12 @@ export const SignIn = () => {
                                                     />
                                                 </div>
                                                 <div className="flex justify-center">
-                                                <button
-                                                    type="button"
-                                                    onClick={handleEmailSubmit}
-                                                    className={`mt-2 hover:text-[#0BA9E4] transition-colors font-medium cursor-pointer ${FONTSIZE[16]}`}>
-                                                    Enter Email ID
-                                                </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={handleEmailSubmit}
+                                                        className={`mt-2 hover:text-[#0BA9E4] transition-colors font-medium cursor-pointer ${FONTSIZE[16]}`}>
+                                                        Enter Email ID
+                                                    </button>
                                                 </div>
 
                                             </div>)}
@@ -384,8 +384,6 @@ export const SignIn = () => {
 
                                 </>
                             ) : step === "otp" ? (
-                                <MoveInForm />
-                            ) : (
                                 <>
                                     <div className="mb-4 md:mb-3 lg:mb-6">
                                         <h3
@@ -418,7 +416,7 @@ export const SignIn = () => {
                                                 className={`text-gray-400 text-xs ${FONTSIZE[16]}`}
                                                 style={{ color: COLORS.grey, fontWeight: WEIGHT.four }}
                                             >
-                                                We will send you a One-Time password on this {showEmailInput ? "Email ID" : "Phone number"} 
+                                                We will send you a One-Time password on this {showEmailInput ? "Email ID" : "Phone number"}
                                             </p>
                                         </div>
                                     </div>
@@ -515,7 +513,9 @@ export const SignIn = () => {
                                         </div>
                                     </form>
                                 </>
-                            )}
+                            ) : step === "movein" ? (
+                                <MoveInForm />
+                            ) : null}
                         </div>
                     </div>
                 </div>
