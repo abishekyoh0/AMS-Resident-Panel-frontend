@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { Eye, Pencil, Trash2, CarFront, Plus } from "lucide-react";
 import Car from "../../assets/VehicleManagement/car.png"
 import Mark from "../../assets/VehicleManagement/mark.png"
 import Parking from "../../assets/VehicleManagement/parking.png"
 import Timer from "../../assets/VehicleManagement/timer.png"
 import { COLORS } from "../../constent/uiconstent";
-import { useNavigate } from "react-router-dom";
+import AddVehicleModal from "../../components/VehicleManagement/AddVehicle";
 
 type Vehicle = {
     id: string;
@@ -43,12 +44,12 @@ const vehicles: Vehicle[] = [
 ];
 
 export default function VehicleManagement() {
+    const [openModal, setOpenModal] = useState(false);
     const totalVehicles = vehicles.length;
     const activeVehicles = vehicles.filter((v) => v.status === "Active").length;
     const withParking = vehicles.filter((v) => v.parking).length;
     const pending = vehicles.filter((v) => v.status === "Pending").length;
 
-    const Navigate = useNavigate();
     return (
         <div style={{color: COLORS.primary_white}}>
 
@@ -69,7 +70,7 @@ export default function VehicleManagement() {
             </div>
 
             <div className="flex justify-end mb-6">
-                <button onClick={() => Navigate("/add-vehicle")}
+                <button onClick={() => setOpenModal(true)}
                 className="flex items-center gap-2 bg-linear-to-r from-blue-500 to-cyan-400 px-6 py-3 rounded-full shadow-lg">
                     <Plus size={18} />
                     Add Vehicle
@@ -81,6 +82,7 @@ export default function VehicleManagement() {
                     <VehicleCard key={vehicle.id} vehicle={vehicle} />
                 ))}
             </div>
+            {openModal && <AddVehicleModal setOpenModal={setOpenModal} />}
         </div>
     );
 }
