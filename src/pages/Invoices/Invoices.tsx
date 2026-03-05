@@ -1,8 +1,61 @@
 import { useState } from "react";
-import { invoices, type Invoice } from "../../data/invoices";
+import { invoices, summaryCards, type Invoice } from "../../data/invoices";
 import InvoiceDetailsModal from "../../components/Invoices/InvoiceDetailsModal";
 import PaymentModal from "../../components/Invoices/PaymentModal";
 import ReceiptModal from "../../components/Invoices/ReceiptModal";
+import { FONTSIZE, WEIGHT, COLORS } from "../../constent/uiconstent";
+// import Due from "../../assets/Invoices/timer.png"
+// import Paid from "../../assets/Invoices/Tick.png"
+// import AllTime from "../../assets/Invoices/Graph.png"
+
+// interface SummaryCard {
+//   id: number;
+//   icon?: string;
+//   title: string;
+//   amount: string;
+//   tag: string;
+//   gradient: string;
+//   border: string;
+//   tagBg: string;
+//   tagcolor: string;
+// }
+
+
+// const summaryCards: SummaryCard[] = [
+//   {
+//     id: 1,
+//     icon: Due,
+//     title: "Pending Payment",
+//     amount: "₹4,200",
+//     tag: "Due",
+//     gradient: "from-[#F0B10033] to-[#FF690033]",
+//     border: "#FDC7004D",
+//     tagBg: "#F0B10033",
+//     tagcolor: "#FDC700",
+//   },
+//   {
+//     id: 2,
+//     icon: Paid,
+//     title: "Total Paid",
+//     amount: "₹8,400",
+//     tag: "Paid",
+//     gradient: "from-[#00C95033] to-[#00BC7D33]",
+//     border: "#05DF724D",
+//     tagBg: "#00C95033",
+//     tagcolor: "#05DF72",
+//   },
+//   {
+//     id: 3,
+//     icon: AllTime,
+//     title: "Total Invoiced",
+//     amount: "₹12,600",
+//     tag: "All Time",
+//     gradient: "from-[#AD46FF33] to-[#F6339A33]",
+//     border: "#C27AFF4D",
+//     tagBg: "#AD46FF33",
+//     tagcolor: "#C27AFF",
+//   },
+// ];
 
 export default function InvoicesPage() {
 
@@ -22,9 +75,34 @@ export default function InvoicesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white p-6">
+    <div className="text-white">
 
-      <h1 className="text-2xl font-bold mb-6">Invoices & Payments</h1>
+      <div className="mb-6">
+        <h1 className={`${FONTSIZE[36]}`} style={{fontWeight: WEIGHT.seven}}>Invoices & Payments</h1>
+        <p className={`mb-4 ${FONTSIZE[16]}`} style={{ color: COLORS.secoundy_gray, fontWeight: WEIGHT.four }}>
+          View and manage your rent and maintenance payments
+        </p>
+      </div>
+
+      <div className="grid gap-5 md:grid-cols-3 mb-6">
+        {summaryCards.map((card) => (
+          <div
+            key={card.id}
+            className={`bg-linear-to-r ${card.gradient} p-5 rounded-xl relative`}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <img src={ card.icon } alt="" />
+              <div className={`text-xs  px-2 py-1 rounded-full`}
+                style={{ background: card.tagBg, color: card.tagcolor }}>
+                {card.tag}
+              </div>
+            </div>
+
+            <h2 className="text-2xl font-semibold">{card.amount}</h2>
+            <p className="text-sm mt-1">{card.title}</p>
+          </div>
+        ))}
+      </div>
 
       <div className="space-y-4">
 
@@ -117,6 +195,14 @@ export default function InvoicesPage() {
               )}
 
             </div>
+
+            {invoice.status === "PAID" && invoice.transaction && (
+              <div className="mt-4 bg-green-900/30 border border-green-700 rounded p-3 text-sm w-3xl flex justify-between flex-wrap gap-4">
+                <span>Paid On: 2025-12-26</span>
+                <span>Transaction ID: {invoice.transaction}</span>
+                <span>Mode: UPI</span>
+              </div>
+            )}
 
           </div>
         ))}
