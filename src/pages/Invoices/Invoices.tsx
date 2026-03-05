@@ -4,65 +4,11 @@ import InvoiceDetailsModal from "../../components/Invoices/InvoiceDetailsModal";
 import PaymentModal from "../../components/Invoices/PaymentModal";
 import ReceiptModal from "../../components/Invoices/ReceiptModal";
 import { FONTSIZE, WEIGHT, COLORS } from "../../constent/uiconstent";
-// import Due from "../../assets/Invoices/timer.png"
-// import Paid from "../../assets/Invoices/Tick.png"
-// import AllTime from "../../assets/Invoices/Graph.png"
-
-// interface SummaryCard {
-//   id: number;
-//   icon?: string;
-//   title: string;
-//   amount: string;
-//   tag: string;
-//   gradient: string;
-//   border: string;
-//   tagBg: string;
-//   tagcolor: string;
-// }
-
-
-// const summaryCards: SummaryCard[] = [
-//   {
-//     id: 1,
-//     icon: Due,
-//     title: "Pending Payment",
-//     amount: "₹4,200",
-//     tag: "Due",
-//     gradient: "from-[#F0B10033] to-[#FF690033]",
-//     border: "#FDC7004D",
-//     tagBg: "#F0B10033",
-//     tagcolor: "#FDC700",
-//   },
-//   {
-//     id: 2,
-//     icon: Paid,
-//     title: "Total Paid",
-//     amount: "₹8,400",
-//     tag: "Paid",
-//     gradient: "from-[#00C95033] to-[#00BC7D33]",
-//     border: "#05DF724D",
-//     tagBg: "#00C95033",
-//     tagcolor: "#05DF72",
-//   },
-//   {
-//     id: 3,
-//     icon: AllTime,
-//     title: "Total Invoiced",
-//     amount: "₹12,600",
-//     tag: "All Time",
-//     gradient: "from-[#AD46FF33] to-[#F6339A33]",
-//     border: "#C27AFF4D",
-//     tagBg: "#AD46FF33",
-//     tagcolor: "#C27AFF",
-//   },
-// ];
 
 export default function InvoicesPage() {
 
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
-  const [modalType, setModalType] = useState<
-    "view" | "payment" | "receipt" | null
-  >(null);
+  const [modalType, setModalType] = useState< "view" | "payment" | "receipt" | null >(null);
 
   const openModal = (type: any, invoice: Invoice) => {
     setSelectedInvoice(invoice);
@@ -86,10 +32,8 @@ export default function InvoicesPage() {
 
       <div className="grid gap-5 md:grid-cols-3 mb-6">
         {summaryCards.map((card) => (
-          <div
-            key={card.id}
-            className={`bg-linear-to-r ${card.gradient} p-5 rounded-xl relative`}
-          >
+          <div key={card.id}
+            className={`bg-linear-to-r ${card.gradient} p-5 rounded-xl relative`}>
             <div className="flex justify-between items-center mb-4">
               <img src={ card.icon } alt="" />
               <div className={`text-xs  px-2 py-1 rounded-full`}
@@ -105,51 +49,40 @@ export default function InvoicesPage() {
       </div>
 
       <div className="space-y-4">
-
         {invoices.map((invoice) => (
-
-          <div
-            key={invoice.id}
-            className="bg-gray-900 border border-gray-700 rounded-xl p-5"
-          >
+          <div key={invoice.id}
+            className="bg-gray-900 border border-gray-700 rounded-xl p-5">
 
             <div className="flex justify-between mb-2">
-
               <div>
                 <p className="text-sm text-gray-400">{invoice.id}</p>
                 <h2 className="text-lg font-semibold">{invoice.month}</h2>
               </div>
 
-              <span
-                className={`px-3 py-1 text-xs rounded-full ${
-                  invoice.status === "PAID"
-                    ? "bg-green-600"
-                    : "bg-yellow-600"
-                }`}
-              >
+              <span className={`px-3 py-1 text-xs rounded-full 
+              ${ invoice.status === "PAID" ? "bg-green-600" : "bg-yellow-600" }`} >
                 {invoice.status}
               </span>
-
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mt-4">
 
               <div>
                 <p className="text-gray-400">Amount</p>
-                <p>${invoice.amount}</p>
+                <p>₹{invoice.amount}</p>
               </div>
 
               <div>
                 <p className="text-gray-400">Paid</p>
                 <p className="text-green-400">
-                  {invoice.status === "PAID" ? `$${invoice.amount}` : "$0"}
+                  {invoice.status === "PAID" ? `₹${invoice.amount}` : "$0"}
                 </p>
               </div>
 
               <div>
                 <p className="text-gray-400">Balance</p>
                 <p className="text-yellow-400">
-                  {invoice.status === "PAID" ? "$0" : `$${invoice.amount}`}
+                  {invoice.status === "PAID" ? "₹0" : `₹${invoice.amount}`}
                 </p>
               </div>
 
