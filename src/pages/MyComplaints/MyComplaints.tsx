@@ -9,6 +9,7 @@ import Doc from "../../assets/Invoices/download.png"
 import Calendar from "../../assets/Invoices/Calender.png"
 import User from "../../assets/Invoices/timer.png"
 
+
 type ComplaintStatus = "OPEN" | "ASSIGNED" | "IN_PROGRESS" | "RESOLVED";
 
 interface Complaint {
@@ -94,6 +95,8 @@ const filters = ["ALL", "OPEN", "ASSIGNED", "IN_PROGRESS", "RESOLVED"];
 
 const MyComplaints: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState("ALL");
+  const [showRaiseModal, setShowRaiseModal] = useState(false);
+  const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(null);
 
   const filteredComplaints =
     activeFilter === "ALL"
@@ -137,7 +140,8 @@ const MyComplaints: React.FC = () => {
           ))}
         </div>
 
-        <button className={`ml-auto flex items-center gap-2 bg-linear-to-r from-[#00B8DB] to-[#7F22FE] px-4 py-2 rounded-full cursor-pointer ${FONTSIZE[18]}`}
+        <button onClick={() => setShowRaiseModal(true)}
+        className={`ml-auto flex items-center gap-2 bg-linear-to-r from-[#00B8DB] to-[#7F22FE] px-4 py-2 rounded-full cursor-pointer ${FONTSIZE[18]}`}
           style={{ boxShadow: "0px 4px 6px -4px #00B8DB40,0px 10px 15px -3px #00B8DB40", fontWeight: WEIGHT.seven }}>
           <PlusIcon /> Raise New Complaint
         </button>
@@ -146,10 +150,21 @@ const MyComplaints: React.FC = () => {
       <div className="space-y-4 ">
 
         {filteredComplaints.map((complaint) => (
-          <ComplaintCard key={complaint.id} complaint={complaint} />
+          <ComplaintCard key={complaint.id} complaint={complaint} 
+          onView={() => setSelectedComplaint(complaint)} />
         ))}
 
       </div>
+      {showRaiseModal && (
+        <RaiseComplaintModal onClose={() => setShowRaiseModal(false)} />
+      )}
+
+      {selectedComplaint && (
+        <ComplaintDetailsModal
+          complaint={selectedComplaint}
+          onClose={() => setSelectedComplaint(null)}
+        />
+      )}
     </div>
   );
 };
@@ -168,7 +183,100 @@ const StatCard = ({ title, value, icon, gradient }: { title: string; value: numb
 );
 
 
-const ComplaintCard = ({ complaint }: { complaint: Complaint }) => {
+const RaiseComplaintModal = ({ onClose }: { onClose: () => void }) => {
+  return (
+    <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-[#1A1A2E] border border-[#FFFFFF33] rounded-lg p-6 max-w-md w-full">
+        <h2 className={`${FONTSIZE[24]}`} style={{ fontWeight: WEIGHT.seven, color: COLORS.primary_white }}>
+          Raise New Complaint
+        </h2>
+        <p className={`${FONTSIZE[14]} mt-2 mb-4`} style={{ color: COLORS.secoundy_gray }}>
+          Please fill in the details below
+        </p>
+        <div className="space-y-4">
+          <input type="text" placeholder="Title" className="w-full bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-lg px-3 py-2" style={{ color: COLORS.primary_white }} />
+          <textarea placeholder="Description" className="w-full bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-lg px-3 py-2" style={{ color: COLORS.primary_white }}></textarea>
+          <select className="w-full bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-lg px-3 py-2" style={{ color: COLORS.primary_white }}>
+            <option>Select Category</option>
+            <option>Electrical</option>
+            <option>Plumbing</option>
+            <option>Carpentry</option>
+          </select>
+        </div>
+        <div className="flex gap-3 mt-6">
+          <button onClick={onClose} className="flex-1 bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-lg px-4 py-2" style={{ color: COLORS.primary_white }}>
+            Cancel
+          </button>
+          <button onClick={onClose} className="flex-1 bg-[#00B8DB] rounded-lg px-4 py-2" style={{ color: COLORS.primary_white, fontWeight: WEIGHT.seven }}>
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ComplaintDetailsModal = ({ complaint, onClose }: { complaint: Complaint; onClose: () => void }) => {
+  return (
+    <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-[#1A1A2E] border border-[#FFFFFF33] rounded-lg p-6 max-w-2xl w-full">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className={`${FONTSIZE[24]}`} style={{ fontWeight: WEIGHT.seven, color: COLORS.primary_white }}>
+            Complaint Details
+          </h2>
+          <button onClick={onClose} className="text-[#FFFFFF99] text-2xl">×</button>
+        </div>
+        <div className="space-y-4">
+          <div>
+            <p className={`${FONTSIZE[12]}`} style={{ color: COLORS.secoundy_gray }}>ID</p>
+            <p className={`${FONTSIZE[16]}`} style={{ color: COLORS.primary_white }}>{complaint.id}</p>
+          </div>
+          <div>
+            <p className={`${FONTSIZE[12]}`} style={{ color: COLORS.secoundy_gray }}>Title</p>
+            <p className={`${FONTSIZE[16]}`} style={{ color: COLORS.primary_white }}>{complaint.title}</p>
+          </div>
+          <div>
+            <p className={`${FONTSIZE[12]}`} style={{ color: COLORS.secoundy_gray }}>Description</p>
+            <p className={`${FONTSIZE[16]}`} style={{ color: COLORS.primary_white }}>{complaint.description}</p>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <p className={`${FONTSIZE[12]}`} style={{ color: COLORS.secoundy_gray }}>Category</p>
+              <p className={`${FONTSIZE[16]}`} style={{ color: COLORS.primary_white }}>{complaint.category}</p>
+            </div>
+            <div>
+              <p className={`${FONTSIZE[12]}`} style={{ color: COLORS.secoundy_gray }}>Date</p>
+              <p className={`${FONTSIZE[16]}`} style={{ color: COLORS.primary_white }}>{complaint.date}</p>
+            </div>
+            <div>
+              <p className={`${FONTSIZE[12]}`} style={{ color: COLORS.secoundy_gray }}>Status</p>
+              <span className={`${FONTSIZE[14]} px-3 py-1 rounded-full ${complaintColor(complaint.status)}`} style={{ fontWeight: WEIGHT.seven }}>
+                {complaint.status.replace("_", " ")}
+              </span>
+            </div>
+            <div>
+              <p className={`${FONTSIZE[12]}`} style={{ color: COLORS.secoundy_gray }}>Priority</p>
+              <p className={`${FONTSIZE[14]} px-3 py-1 rounded-full ${badgeColor(complaint.priority)}`} style={{ fontWeight: WEIGHT.seven }}>
+                {complaint.priority}
+              </p>
+            </div>
+          </div>
+          {complaint.assignedTo && (
+            <div>
+              <p className={`${FONTSIZE[12]}`} style={{ color: COLORS.secoundy_gray }}>Assigned To</p>
+              <p className={`${FONTSIZE[16]}`} style={{ color: COLORS.primary_white }}>{complaint.assignedTo}</p>
+            </div>
+          )}
+        </div>
+        <button onClick={onClose} className="mt-6 w-full bg-[#00B8DB] rounded-lg px-4 py-2" style={{ color: COLORS.primary_white, fontWeight: WEIGHT.seven }}>
+          Close
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const ComplaintCard = ({ complaint, onView, }: { complaint: Complaint; onView: () => void; }) => {
   return (
     <div className="bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-2xl p-5 ">
       <div className="flex justify-between flex-wrap">
@@ -190,7 +298,8 @@ const ComplaintCard = ({ complaint }: { complaint: Complaint }) => {
           </div>
         </div>
         <div className={`space-y-4 ${FONTSIZE[14]}`} style={{ fontWeight: WEIGHT.seven }}>
-          <button className={`flex items-center gap-2 bg-[#00B8DB33] border border-[#00D3F24D] text-[#00D3F2] px-4 py-1 rounded-lg cursor-pointer`}>
+          <button onClick={onView}
+          className={`flex items-center gap-2 bg-[#00B8DB33] border border-[#00D3F24D] text-[#00D3F2] px-4 py-1 rounded-lg cursor-pointer`}>
             <EyeIcon size={16} /> View
           </button>
           <button className={`flex items-center gap-2 bg-[#FB2C3633] border border-[#FB2C364D] text-[#FB2C36] px-3 py-1 rounded-lg cursor-pointer`}>
