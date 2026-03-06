@@ -128,19 +128,15 @@ const MyComplaints: React.FC = () => {
       <div className="flex gap-3 mb-6 flex-wrap">
 
         {filters.map((filter) => (
-          <button
-            key={filter}
+          <button key={filter}
             onClick={() => setActiveFilter(filter)}
-            className={`px-5 py-2 rounded-2xl ${FONTSIZE[14]} ${activeFilter === filter
-              ? "bg-[#00B8DB]"
-              : "bg-[#FFFFFF0D] hover:bg-gray-700"
-              }`}
-          >
+            className={`px-5 py-2 rounded-2xl cursor-pointer ${FONTSIZE[14]} ${activeFilter === filter
+              ? "bg-[#00B8DB]" : "bg-[#FFFFFF0D] hover:bg-gray-700" }`}>
             {filter.replace("_", " ")}
           </button>
         ))}
 
-        <button className={`ml-auto flex items-center gap-2 bg-linear-to-r from-[#00B8DB] to-[#7F22FE] px-4 py-2 rounded-full ${FONTSIZE[18]}`}
+        <button className={`ml-auto flex items-center gap-2 bg-linear-to-r from-[#00B8DB] to-[#7F22FE] px-4 py-2 rounded-full cursor-pointer ${FONTSIZE[18]}`}
           style={{ boxShadow: "0px 4px 6px -4px #00B8DB40,0px 10px 15px -3px #00B8DB40", fontWeight: WEIGHT.seven }}>
           <PlusIcon /> Raise New Complaint
         </button>
@@ -194,10 +190,10 @@ const ComplaintCard = ({ complaint }: { complaint: Complaint }) => {
           </div>
         </div>
         <div className={`space-y-4 ${FONTSIZE[14]}`} style={{ fontWeight: WEIGHT.seven }}>
-          <button className={`flex items-center gap-2 bg-[#00B8DB33] border border-[#00D3F24D] text-[#00D3F2] px-4 py-1 rounded-lg`}>
+          <button className={`flex items-center gap-2 bg-[#00B8DB33] border border-[#00D3F24D] text-[#00D3F2] px-4 py-1 rounded-lg cursor-pointer`}>
             <EyeIcon size={16} /> View
           </button>
-          <button className={`flex items-center gap-2 bg-[#FB2C3633] border border-[#FB2C364D] text-[#FB2C36] px-3 py-1 rounded-lg`}>
+          <button className={`flex items-center gap-2 bg-[#FB2C3633] border border-[#FB2C364D] text-[#FB2C36] px-3 py-1 rounded-lg cursor-pointer`}>
             <Trash2Icon size={16} /> Delete
           </button>
         </div>
