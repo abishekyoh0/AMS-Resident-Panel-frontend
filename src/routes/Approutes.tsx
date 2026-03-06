@@ -10,8 +10,8 @@ import AddVehicle from "../components/VehicleManagement/AddVehicle";
 import FamilyTenants from "../pages/FamilyTenants/FamilyTenants"
 import VisitorManagement from '../pages/VisitorManagement/VisitorManagement';
 import MyProfile from "../pages/Profile/profile";
-import { MyComplaints } from "../pages/MyComplaints/MyComplaints";
 import Invoices from "../pages/Invoices/Invoices";
+import MyComplaints from "../pages/MyComplaints/MyComplaints";
 
 export default function AppRoutes() {
   return (
