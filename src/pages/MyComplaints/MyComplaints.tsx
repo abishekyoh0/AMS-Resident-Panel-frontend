@@ -125,25 +125,25 @@ const MyComplaints: React.FC = () => {
 
       </div>
 
-      <div className="flex gap-3 mb-6 flex-wrap">
-
-        {filters.map((filter) => (
-          <button key={filter}
-            onClick={() => setActiveFilter(filter)}
-            className={`px-5 py-2 rounded-2xl cursor-pointer ${FONTSIZE[14]} ${activeFilter === filter
-              ? "bg-[#00B8DB]" : "bg-[#FFFFFF0D] hover:bg-gray-700" }`}>
-            {filter.replace("_", " ")}
-          </button>
-        ))}
+      <div className="flex flex-wrap gap-3 mb-6 ">
+        <div className="flex gap-3 overflow-y-auto ">
+          {filters.map((filter) => (
+            <button key={filter}
+              onClick={() => setActiveFilter(filter)}
+              className={`px-5 py-2 rounded-2xl cursor-pointer ${FONTSIZE[14]} ${activeFilter === filter
+                ? "bg-[#00B8DB]" : "bg-[#FFFFFF0D] hover:bg-gray-700"}`}>
+              {filter.replace("_", " ")}
+            </button>
+          ))}
+        </div>
 
         <button className={`ml-auto flex items-center gap-2 bg-linear-to-r from-[#00B8DB] to-[#7F22FE] px-4 py-2 rounded-full cursor-pointer ${FONTSIZE[18]}`}
           style={{ boxShadow: "0px 4px 6px -4px #00B8DB40,0px 10px 15px -3px #00B8DB40", fontWeight: WEIGHT.seven }}>
           <PlusIcon /> Raise New Complaint
         </button>
-
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 ">
 
         {filteredComplaints.map((complaint) => (
           <ComplaintCard key={complaint.id} complaint={complaint} />
@@ -171,7 +171,7 @@ const StatCard = ({ title, value, icon, gradient }: { title: string; value: numb
 const ComplaintCard = ({ complaint }: { complaint: Complaint }) => {
   return (
     <div className="bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-2xl p-5 ">
-      <div className="flex justify-between">
+      <div className="flex justify-between flex-wrap">
         <div>
           <div className="flex items-center gap-5 mb-3">
             <p className={`${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>{complaint.id}</p>
