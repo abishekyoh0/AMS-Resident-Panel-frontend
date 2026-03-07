@@ -15,6 +15,7 @@ import person from "../../assets/Visitor/person.png"
 import tools from "../../assets/Visitor/tools.png"
 import paper from "../../assets/Visitor/paper.png"
 import box from "../../assets/Visitor/box.png"
+
 export type Visitor = {
   id: number;
   name: string;

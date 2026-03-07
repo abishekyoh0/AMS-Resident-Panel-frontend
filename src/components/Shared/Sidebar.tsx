@@ -20,7 +20,7 @@ const menuItems = [
   { to: "/my-profile", label: "My Profile", icon: profile, end: true },
   { to: "/family&tenants", label: "Family & Tenants", icon: family, end: true },
   { to: "/vehicles&parking", label: "Vehicles & Parking", icon: vehicle, end: true },
-  { to: "/complaint", label: "My Complaints", icon: complaint, end: true },
+  { to: "/my-complaints", label: "My Complaints", icon: complaint, end: true },
   { to: "/invoices", label: "Invoices", icon: invoice, end: true },
   { to: "/visitors", label: "Visitors", icon: visitor, end: true },
   { to: "/entry-history", label: "Entry History", icon: entry, end: true },

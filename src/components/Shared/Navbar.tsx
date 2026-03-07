@@ -1,17 +1,17 @@
-import { COLORS, FONTSIZE } from "../../constent/uiconstent";
+import { COLORS, FONTSIZE, FONTWEIGHT } from "../../constent/uiconstent";
 import notification from "../../assets/navbar/notification.png";
 import website from "../../assets/navbar/website.png";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import NotificationPopup from "../../pages/Notifications/Notifications";
 import { useState } from "react";
-import { Menu } from "lucide-react";
+import { ChevronLeft, Menu } from "lucide-react";
 
 type NavbarProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export function Navbar({ setIsOpen }: NavbarProps) {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [openNotif, setOpenNotif] = useState(false);
 
   return (
@@ -64,6 +64,24 @@ export function Navbar({ setIsOpen }: NavbarProps) {
             Website
           </span>
         </div>
+                <div
+          className="flex cursor-pointer px-2 sm:px-2 md:px-3 py-1 sm:py-1.5 md:py-2 rounded-xl border"
+          style={{ backgroundColor: "#FFFFFF1A", borderColor: "#FFFFFF1A" }}
+          onClick={() => navigate(-1)}
+        >
+          <p
+            className={`text-sm sm:text-xs md:text-sm lg:text-base ${FONTWEIGHT[400]}`}
+            style={{ color: COLORS.primary_white }}
+          >
+            <span className="sm:hidden">
+              <ChevronLeft size={20} />
+            </span>
+            <span className="hidden sm:inline whitespace-nowrap">
+              ← Back to Panels
+            </span>
+          </p>
+        </div>
+
       </div>
     </div>
   );
