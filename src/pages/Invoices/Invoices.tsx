@@ -5,6 +5,7 @@ import PaymentModal from "../../components/Invoices/PaymentModal";
 import ReceiptModal from "../../components/Invoices/ReceiptModal";
 import { FONTSIZE, WEIGHT, COLORS, FONTWEIGHT } from "../../constent/uiconstent";
 import date from "../../assets/Invoices/Calender.png"
+import { CreditCardIcon, EyeIcon, FileTextIcon } from "lucide-react";
 
 export default function InvoicesPage() {
 
@@ -87,24 +88,24 @@ export default function InvoicesPage() {
 
               <div className={`flex gap-3 flex-wrap ${FONTSIZE[14]}`} style={{ fontWeight: WEIGHT.seven }}>
 
-                <button onClick={() => openModal("view", invoice)} className="bg-[#00B8DB33] border border-[#00D3F24D] text-[#00D3F2] px-4 py-1 rounded-xl cursor-pointer">
-                  View
+                <button onClick={() => openModal("view", invoice)} className="flex items-center gap-2 bg-[#00B8DB33] border border-[#00D3F24D] text-[#00D3F2] px-4 py-1 rounded-xl cursor-pointer">
+                 <EyeIcon /> View
                 </button>
 
-                <button onClick={() => openModal("view", invoice)} className="bg-[#2B7FFF33] border border-[#51A2FF4D] text-[#51A2FF] px-4 py-1 rounded-xl cursor-pointer">
-                  Invoice
+                <button onClick={() => openModal("view", invoice)} className="flex items-center gap-2 bg-[#2B7FFF33] border border-[#51A2FF4D] text-[#51A2FF] px-4 py-1 rounded-xl cursor-pointer">
+                  <FileTextIcon /> Invoice
                 </button>
 
                 {invoice.status === "PENDING" && (
-                  <button onClick={() => openModal("payment", invoice)} className="bg-linear-to-r from-[#00C950] to-[#009966] px-4 py-1 rounded-xl cursor-pointer">
-                    Pay Now
+                  <button onClick={() => openModal("payment", invoice)} className="flex items-center gap-2 bg-linear-to-r from-[#00C950] to-[#009966] px-4 py-1 rounded-xl cursor-pointer">
+                   <CreditCardIcon /> Pay Now
                   </button>
                 )}
 
                 {invoice.status === "PAID" && (
                   <button onClick={() => openModal("receipt", invoice)}
-                    className="bg-[#00C95033] border border-[#05DF724D] text-[#05DF72] px-4 py-1 rounded-xl cursor-pointer">
-                    Receipt
+                    className="flex items-center gap-2 bg-[#00C95033] border border-[#05DF724D] text-[#05DF72] px-4 py-1 rounded-xl cursor-pointer">
+                    <FileTextIcon /> Receipt
                   </button>
                 )}
 
