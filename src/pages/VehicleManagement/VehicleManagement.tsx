@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Eye, Pencil, Trash2, CarFront, Plus, X } from "lucide-react";
+import { Eye, Pencil, Trash2, Plus, X } from "lucide-react";
 import Car from "../../assets/VehicleManagement/car.png";
 import Mark from "../../assets/VehicleManagement/mark.png";
 import Parking from "../../assets/VehicleManagement/parking.png";
 import Timer from "../../assets/VehicleManagement/timer.png";
-import { COLORS } from "../../constent/uiconstent";
+import { COLORS, FONTSIZE, FONTWEIGHT, WEIGHT } from "../../constent/uiconstent";
 import AddVehicleModal from "../../components/VehicleManagement/AddVehicle";
 
 type Vehicle = {
@@ -50,7 +50,7 @@ export default function VehicleManagement() {
   const [vehicles, setVehicles] = useState<Vehicle[]>(initialVehicles);
   const [viewVehicle, setViewVehicle] = useState<Vehicle | null>(null);
   const [editVehicle, setEditVehicle] = useState<Vehicle | null>(null);
-      const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const totalVehicles = vehicles.length;
   const activeVehicles = vehicles.filter((v) => v.status === "Active").length;
@@ -73,26 +73,28 @@ export default function VehicleManagement() {
   return (
     <div style={{ color: COLORS.primary_white }}>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Vehicle Management</h1>
-        <p className="text-gray-400">
+        <h1 className={`${FONTSIZE[36]}`} style={{ fontWeight: WEIGHT.seven }}>Vehicle Management</h1>
+        <p className={`${FONTSIZE[16]} ${FONTWEIGHT[400]}`}
+          style={{ color: COLORS.secoundy_gray }}>
           Manage your vehicles and parking assignments
         </p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Total Vehicles" value={totalVehicles} image={Car} />
-        <StatCard label="Active" value={activeVehicles} image={Mark} />
-        <StatCard label="With Parking" value={withParking} image={Parking} />
-        <StatCard label="Pending" value={pending} image={Timer} />
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+        <StatCard label="Total Vehicles" value={totalVehicles} image={Car} text="from-[#2B7FFF] to-[#00B8DB]" />
+        <StatCard label="Active" value={activeVehicles} image={Mark} text="from-[#00C950] to-[#00BC7D]" />
+        <StatCard label="With Parking" value={withParking} image={Parking} text="from-[#AD46FF] to-[#F6339A]" />
+        <StatCard label="Pending" value={pending} image={Timer} text="from-[#FF6B6B] to-[#FF8E53]" />
       </div>
 
-<div className="flex justify-end mb-6">
-                <button onClick={() => setOpenModal(true)}
-                className="flex items-center gap-2 bg-linear-to-r from-blue-500 to-cyan-400 px-6 py-3 rounded-full shadow-lg">
-                    <Plus size={18} />
-                    Add Vehicle
-                </button>
-            </div>
+      <div className="flex justify-end mb-6" style={{ fontWeight: WEIGHT.seven }}>
+        <button onClick={() => setOpenModal(true)}
+          className={`flex items-center gap-2 bg-linear-to-r from-[#2B7FFF] to-[#0092B8] px-6 py-3 rounded-full shadow-lg ${FONTSIZE[20]}`}
+          style={{ boxShadow: "0px 4px 6px -4px #2B7FFF40,0px 10px 15px -3px #2B7FFF40" }}>
+          <Plus size={24} />
+          Add Vehicle
+        </button>
+      </div>
 
       <div className="space-y-6">
         {vehicles.map((vehicle) => (
@@ -105,7 +107,7 @@ export default function VehicleManagement() {
           />
         ))}
       </div>
-            {openModal && <AddVehicleModal setOpenModal={setOpenModal} />}
+      {openModal && <AddVehicleModal setOpenModal={setOpenModal} />}
 
       {viewVehicle && (
         <ViewVehicleModal
@@ -129,15 +131,19 @@ function StatCard({
   label,
   value,
   image,
+  text,
 }: {
   label: string;
   value: number;
   image: string;
+  text: string;
 }) {
   return (
     <div className="bg-[#0E1215] border border-gray-700 rounded-xl p-5">
       <div className="flex justify-between items-center">
-        <p className="text-2xl font-bold text-cyan-400">{value}</p>
+        <p className={`bg-linear-to-r ${text} bg-clip-text text-transparent mb-6 ${FONTSIZE[30]}`} style={{fontWeight: WEIGHT.seven}}>
+          {value}
+        </p>
         <img src={image} alt="" />
       </div>
       <p className="text-gray-400 text-sm">{label}</p>
@@ -159,9 +165,8 @@ function VehicleCard({
   return (
     <div className="bg-[#0E1215] border border-gray-700 rounded-xl p-6">
       <div className="flex justify-between items-center">
-        <div className="flex gap-3 items-center">
-          <CarFront className="text-cyan-400" />
-
+        <div className="flex gap-3">
+          <img src={Car} alt="" />
           <div>
             <h2 className="font-semibold text-lg">{vehicle.number}</h2>
             <p className="text-gray-400 text-sm">{vehicle.vehicleId}</p>
