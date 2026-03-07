@@ -1,22 +1,26 @@
 import { COLORS, FONTSIZE, WEIGHT } from "../../constent/uiconstent";
 import Doc from "../../assets/Invoices/download.png"
+import { X } from "lucide-react";
 
 export default function InvoiceDetailsModal({ invoice, close }: any) {
     return (
         <div className="fixed inset-0 z-50 bg-[#FFFFFF66] flex items-center justify-center">
 
             <div className="bg-linear-to-br from-[#0A0A1E] to-[#0F0520] border border-[#00D3F280] p-6 rounded-xl w-125">
-                <div className="flex justify-between items-center mb-6">
-                    <div>
-                        <h2 className={`${FONTSIZE[30]}`} style={{ fontWeight: WEIGHT.seven }}>Invoice Details</h2>
-                        <p className={`${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>{invoice.id}</p>
-                    </div>
+                <div className="flex justify-between items-center">
+                    <h2 className={`${FONTSIZE[30]}`} style={{ fontWeight: WEIGHT.seven }}>Invoice Details</h2>
+                    <div className="flex gap-4">
                     <p className={`px-3 py-1 rounded-full ${FONTSIZE[14]}
                         ${invoice.status === "PAID" ? "bg-[#00C95033] border border-[#00C95066] text-[#05DF72]" : "bg-[#F0B10033] border border-[#F0B10066] text-[#FDC700]"}`}
                         style={{ fontWeight: WEIGHT.seven }}>
                         {invoice.status}
                     </p>
+                    <button onClick={close} className=" p-2 rounded-full hover:bg-white/10 transition cursor-pointer">
+                        <X size={18} className="text-gray-300" />
+                    </button>
+                    </div>
                 </div>
+                <p className={`mb-4 ${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>{invoice.id}</p>
 
 
                 <div className="bg-[#FFFFFF0D] border-[#FFFFFF1A] p-4 rounded-xl mb-4">
@@ -32,7 +36,6 @@ export default function InvoiceDetailsModal({ invoice, close }: any) {
                             <p className={`${FONTSIZE[18]}`} style={{ fontWeight: WEIGHT.seven }}>{invoice.dueDate}</p>
                         </div>
                     </div>
-
                 </div>
 
                 <div className="bg-[#FFFFFF0D] border-[#FFFFFF1A] p-4 rounded-xl">

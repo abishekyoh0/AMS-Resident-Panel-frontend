@@ -3,7 +3,7 @@ import { invoices, summaryCards, type Invoice } from "../../data/invoices";
 import InvoiceDetailsModal from "../../components/Invoices/InvoiceDetailsModal";
 import PaymentModal from "../../components/Invoices/PaymentModal";
 import ReceiptModal from "../../components/Invoices/ReceiptModal";
-import { FONTSIZE, WEIGHT, COLORS } from "../../constent/uiconstent";
+import { FONTSIZE, WEIGHT, COLORS, FONTWEIGHT } from "../../constent/uiconstent";
 import date from "../../assets/Invoices/Calender.png"
 
 export default function InvoicesPage() {
@@ -44,13 +44,15 @@ export default function InvoicesPage() {
             className={`bg-linear-to-r ${card.gradient} p-5 rounded-xl`}>
             <div className="flex justify-between items-center mb-4">
               <img src={card.icon} alt="" />
-              <div className={`px-2 py-1 rounded-full ${FONTSIZE[12]}`}
-                style={{ background: card.tagBg, color: card.tagcolor, fontWeight: WEIGHT.seven }}>
+              <div className={`px-2 py-1 rounded-full ${FONTSIZE[12]} ${FONTWEIGHT[700]}`}
+                style={{ background: card.tagBg, color: card.tagcolor}}>
                 {card.tag}
               </div>
             </div>
-            <h2 className={`${FONTSIZE[30]}`} style={{ fontWeight: WEIGHT.seven }}>{card.amount}</h2>
-            <p className={`mt-2 ${FONTSIZE[16]}`} style={{ color: COLORS.secoundy_gray }}>{card.title}</p>
+            <h2 className={`${FONTSIZE[30]}`}
+             style={{ fontWeight: WEIGHT.seven }}
+            >{card.amount}</h2>
+            <p className={`mt-2 ${FONTSIZE[16]} ${FONTWEIGHT[700]} `} style={{ color: COLORS.secoundy_gray }}>{card.title}</p>
           </div>
         ))}
       </div>
