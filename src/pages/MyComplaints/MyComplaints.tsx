@@ -14,6 +14,7 @@ import CustomDropdown from "../../components/common/custormdropdown";
 type ComplaintStatus = "OPEN" | "ASSIGNED" | "IN_PROGRESS" | "RESOLVED";
 
 interface Complaint {
+  type: "Common" | "Individual";
   id: string;
   title: string;
   description: string;
@@ -34,6 +35,7 @@ const complaintsData: Complaint[] = [
     assignedTo: "Mike Wilson",
     status: "IN_PROGRESS",
     priority: "HIGH",
+    type: "Common"
   },
   {
     id: "CM-1002",
@@ -44,6 +46,7 @@ const complaintsData: Complaint[] = [
     assignedTo: "John Smith",
     status: "RESOLVED",
     priority: "CRITICAL",
+    type: "Individual"
   },
   {
     id: "CM-1003",
@@ -53,6 +56,7 @@ const complaintsData: Complaint[] = [
     date: "2026-01-20",
     status: "OPEN",
     priority: "MEDIUM",
+    type: "Common"
   },
   {
     id: "CM-1004",
@@ -63,6 +67,7 @@ const complaintsData: Complaint[] = [
     assignedTo: "John Smith",
     status: "ASSIGNED",
     priority: "HIGH",
+    type: "Individual"
   },
 ];
 
@@ -98,8 +103,6 @@ const complaintCategories = [
   { label: "Electrical", value: "ELECTRICAL" },
   { label: "Plumbing", value: "PLUMBING" },
   { label: "Carpentry", value: "CARPENTRY" },
-  { label: "Cleaning", value: "CLEANING" },
-  { label: "Other", value: "OTHER" },
 ]
 
 const complaintTypes = [
@@ -214,7 +217,6 @@ const StatCard = ({ title, value, icon, gradient }: { title: string; value: numb
   </div>
 );
 
-
 const RaiseComplaintModal = ({
   onClose,
   selectedCategory,
@@ -318,56 +320,71 @@ const RaiseComplaintModal = ({
 const ComplaintDetailsModal = ({ complaint, onClose }: { complaint: Complaint; onClose: () => void }) => {
   return (
     <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-[#1A1A2E] border border-[#FFFFFF33] rounded-lg p-6 max-w-2xl w-full">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className={`${FONTSIZE[24]}`} style={{ fontWeight: WEIGHT.seven, color: COLORS.primary_white }}>
+      <div className="bg-linear-to-r from-[#0A0A1E] to-[#0F0520] border border-[#00D3F280] rounded-2xl p-4 w-140 h-145 overflow-y-auto">
+        <div className="flex justify-between items-center mt-2">
+          <h2 className={`${FONTSIZE[30]}`} style={{ fontWeight: WEIGHT.seven }}>
             Complaint Details
           </h2>
-          <button onClick={onClose} className="text-[#FFFFFF99] text-2xl">×</button>
+          <div className="flex items-center gap-5">
+            <span className={`${FONTSIZE[14]} px-3 py-1 rounded-full ${complaintColor(complaint.status)}`} style={{ fontWeight: WEIGHT.seven }}>
+              {complaint.status.replace("_", " ")}
+            </span>
+            <button onClick={onClose} className=" p-2 rounded-full hover:bg-white/10 transition cursor-pointer">
+              <X size={18} className="text-gray-300" />
+            </button>
+          </div>
         </div>
-        <div className="space-y-4">
-          <div>
-            <p className={`${FONTSIZE[12]}`} style={{ color: COLORS.secoundy_gray }}>ID</p>
-            <p className={`${FONTSIZE[16]}`} style={{ color: COLORS.primary_white }}>{complaint.id}</p>
-          </div>
-          <div>
-            <p className={`${FONTSIZE[12]}`} style={{ color: COLORS.secoundy_gray }}>Title</p>
-            <p className={`${FONTSIZE[16]}`} style={{ color: COLORS.primary_white }}>{complaint.title}</p>
-          </div>
-          <div>
-            <p className={`${FONTSIZE[12]}`} style={{ color: COLORS.secoundy_gray }}>Description</p>
-            <p className={`${FONTSIZE[16]}`} style={{ color: COLORS.primary_white }}>{complaint.description}</p>
-          </div>
+            <p className={`mb-6 ${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>{complaint.id}</p>
+
+        <div className="space-y-8">
+          
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <p className={`${FONTSIZE[12]}`} style={{ color: COLORS.secoundy_gray }}>Category</p>
-              <p className={`${FONTSIZE[16]}`} style={{ color: COLORS.primary_white }}>{complaint.category}</p>
+            <p className={`${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray, fontWeight: WEIGHT.seven }}>Title</p>
+            <p className={`${FONTSIZE[18]}`} style={{ fontWeight: WEIGHT.seven }}>{complaint.title}</p>
+          </div>
+            <div>
+            <p className={`${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray, fontWeight: WEIGHT.seven }}>Type</p>
+            <p className={`${FONTSIZE[16]}`}>{complaint.type}</p>
+          </div>
+            <div>
+              <p className={`${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray, fontWeight: WEIGHT.seven }}>Category</p>
+              <p className={`${FONTSIZE[16]}`}>{complaint.category}</p>
             </div>
             <div>
-              <p className={`${FONTSIZE[12]}`} style={{ color: COLORS.secoundy_gray }}>Date</p>
-              <p className={`${FONTSIZE[16]}`} style={{ color: COLORS.primary_white }}>{complaint.date}</p>
-            </div>
-            <div>
-              <p className={`${FONTSIZE[12]}`} style={{ color: COLORS.secoundy_gray }}>Status</p>
-              <span className={`${FONTSIZE[14]} px-3 py-1 rounded-full ${complaintColor(complaint.status)}`} style={{ fontWeight: WEIGHT.seven }}>
-                {complaint.status.replace("_", " ")}
-              </span>
-            </div>
-            <div>
-              <p className={`${FONTSIZE[12]}`} style={{ color: COLORS.secoundy_gray }}>Priority</p>
-              <p className={`${FONTSIZE[14]} px-3 py-1 rounded-full ${badgeColor(complaint.priority)}`} style={{ fontWeight: WEIGHT.seven }}>
+              <p className={`${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray, fontWeight: WEIGHT.seven }}>Priority</p>
+              <p className={`${FONTSIZE[16]} w-fit px-3 py-1 rounded-full ${badgeColor(complaint.priority)}`} style={{ fontWeight: WEIGHT.seven }}>
                 {complaint.priority}
               </p>
             </div>
           </div>
+          <div>
+            <p className={`${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray, fontWeight: WEIGHT.seven }}>Description</p>
+            <p className={`${FONTSIZE[16]}`}>{complaint.description}</p>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+          <div>
+              <p className={`${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray, fontWeight: WEIGHT.seven }}>Date</p>
+              <p className={`${FONTSIZE[16]}`}>{complaint.date}</p>
+            </div>
           {complaint.assignedTo && (
             <div>
-              <p className={`${FONTSIZE[12]}`} style={{ color: COLORS.secoundy_gray }}>Assigned To</p>
-              <p className={`${FONTSIZE[16]}`} style={{ color: COLORS.primary_white }}>{complaint.assignedTo}</p>
+              <p className={`${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray, fontWeight: WEIGHT.seven }}>Assigned To</p>
+              <p className={`${FONTSIZE[16]}`}>{complaint.assignedTo}</p>
             </div>
           )}
+          </div>
         </div>
-        <button onClick={onClose} className="mt-6 w-full bg-[#00B8DB] rounded-lg px-4 py-2" style={{ color: COLORS.primary_white, fontWeight: WEIGHT.seven }}>
+        <div>
+          <p className={`mt-3 ${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray, fontWeight: WEIGHT.seven }}>Images</p>
+          <p className="border border-[#FFFFFF1A] h-30 rounded-2xl mt-1"></p>
+        </div>
+        <div className="bg-[#2B7FFF1A] border border-[#51A2FF4D] p-4 mt-4 rounded-2xl">
+          <p className={`mb-2 ${FONTSIZE[14]}`} style={{ color: "#51A2FF", fontWeight: WEIGHT.seven }}>Technician Notes</p>
+          <p className={`${FONTSIZE[16]}`}>Checking the compressor. Will replace if needed.</p>
+        </div>
+        <button onClick={onClose} className={`w-full bg-linear-to-r from-[#00B8DB] to-[#7F22FE] rounded-full px-4 py-2 cursor-pointer mt-6 ${FONTSIZE[16]}`}
+            style={{ boxShadow: "0px 8px 10px -6px #00B8DB40,0px 20px 25px -5px #00B8DB40" }}>
           Close
         </button>
       </div>
@@ -409,6 +426,7 @@ const ComplaintCard = ({ complaint, onView, }: { complaint: Complaint; onView: (
 
       <div className={`${FONTSIZE[14]} flex gap-4`} style={{ color: COLORS.secoundy_gray }}>
         <span className={`flex items-center gap-2`}><img src={Doc} alt="" className="w-4 h-4" />{complaint.category}</span>
+        <span className={`flex items-center gap-2`}><img src={Doc} alt="" className="w-4 h-4" />{complaint.type}</span>
         <span className={`flex items-center gap-2`}><img src={Calendar} alt="" className="w-4 h-4" />{complaint.date}</span>
         {complaint.assignedTo && <span className={`flex items-center gap-2`}><img src={User} alt="" className="w-4 h-4" />{complaint.assignedTo}</span>}
       </div>

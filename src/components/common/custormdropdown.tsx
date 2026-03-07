@@ -125,7 +125,7 @@ export function CustomDropdown({
                 key={opt.value}
                 onClick={() => { onChange(opt.value); setOpen(false); }}
                 className={`
-                  w-full px-3.5 py-2.5 mb-1.5 rounded-[9px] cursor-pointer
+                  w-full px-3.5 py-2.5 mb-3 rounded-[9px] cursor-pointer
                   flex items-center justify-center gap-2.5
                   border border-[#FFFFFF33] transition-colors duration-150 ${FONTSIZE[16]} ${FONTWEIGHT[700]}
                   ${isSelected
