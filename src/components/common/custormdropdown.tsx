@@ -77,9 +77,9 @@ export function CustomDropdown({
 
       {/* Label */}
       {label && (
-        <label className="block text-sm text-gray-400 mb-1">
+        <label className={`block mb-1 ${FONTSIZE[14]} ${FONTWEIGHT[700]}`}>
           {label}
-          {required && <span className="text-blue-400 ml-0.5">*</span>}
+          {required && <span className=" ml-0.5">*</span>}
         </label>
       )}
 
@@ -87,7 +87,7 @@ export function CustomDropdown({
       <div
         onClick={() => setOpen((p) => !p)}
         className={`
-          w-full px-3.5 py-3 rounded-[10px] cursor-pointer select-none
+          w-full px-3 py-2 rounded-[10px] cursor-pointer select-none
           flex items-center justify-between gap-2.5
           bg-[#FFFFFF0D] text-sm transition-colors duration-200
           ${open ? "border border-white/35" : "border border-[#FFFFFF33]"}

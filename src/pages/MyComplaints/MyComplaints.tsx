@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, type ChangeEvent } from "react";
 import { COLORS, FONTSIZE, FONTWEIGHT, WEIGHT } from "../../constent/uiconstent";
 import Notes from "../../assets/complaints/Notes.png"
 import Tool from "../../assets/complaints/Tool.png"
 import Graph from "../../assets/complaints/Graph.png"
 import Tick from "../../assets/complaints/Tick.png"
-import { EyeIcon, PlusIcon, Trash2Icon } from "lucide-react";
+import { EyeIcon, PlusIcon, Trash2Icon, X } from "lucide-react";
 import Doc from "../../assets/Invoices/download.png"
 import Calendar from "../../assets/Invoices/Calender.png"
 import User from "../../assets/Invoices/timer.png"
-
+import cam from "../../assets/Invoices/camera.png"
+import CustomDropdown from "../../components/common/custormdropdown";
 
 type ComplaintStatus = "OPEN" | "ASSIGNED" | "IN_PROGRESS" | "RESOLVED";
 
@@ -93,10 +94,33 @@ const badgeColor = (priority?: string) => {
 
 const filters = ["ALL", "OPEN", "ASSIGNED", "IN_PROGRESS", "RESOLVED"];
 
+const complaintCategories = [
+  { label: "Electrical", value: "ELECTRICAL" },
+  { label: "Plumbing", value: "PLUMBING" },
+  { label: "Carpentry", value: "CARPENTRY" },
+  { label: "Cleaning", value: "CLEANING" },
+  { label: "Other", value: "OTHER" },
+]
+
+const complaintTypes = [
+  { label: "Common", value: "Common" },
+  { label: "Individual", value: "Individual" },
+]
+
+const complaintPriority = [
+  { label: "High", value: "High" },
+  { label: "Medium", value: "Medium" },
+  { label: "Low", value: "Low" },
+  { label: "Critical", value: "Critical" },
+]
+
 const MyComplaints: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState("ALL");
   const [showRaiseModal, setShowRaiseModal] = useState(false);
   const [selectedComplaint, setSelectedComplaint] = useState<Complaint | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedType, setSelectedType] = useState("");
+  const [selectedPriority, setSelectedPriority] = useState("");
 
   const filteredComplaints =
     activeFilter === "ALL"
@@ -141,7 +165,7 @@ const MyComplaints: React.FC = () => {
         </div>
 
         <button onClick={() => setShowRaiseModal(true)}
-        className={`ml-auto flex items-center gap-2 bg-linear-to-r from-[#00B8DB] to-[#7F22FE] px-4 py-2 rounded-full cursor-pointer ${FONTSIZE[18]}`}
+          className={`ml-auto flex items-center gap-2 bg-linear-to-r from-[#00B8DB] to-[#7F22FE] px-4 py-2 rounded-full cursor-pointer ${FONTSIZE[18]}`}
           style={{ boxShadow: "0px 4px 6px -4px #00B8DB40,0px 10px 15px -3px #00B8DB40", fontWeight: WEIGHT.seven }}>
           <PlusIcon /> Raise New Complaint
         </button>
@@ -150,13 +174,21 @@ const MyComplaints: React.FC = () => {
       <div className="space-y-4 ">
 
         {filteredComplaints.map((complaint) => (
-          <ComplaintCard key={complaint.id} complaint={complaint} 
-          onView={() => setSelectedComplaint(complaint)} />
+          <ComplaintCard key={complaint.id} complaint={complaint}
+            onView={() => setSelectedComplaint(complaint)} />
         ))}
 
       </div>
       {showRaiseModal && (
-        <RaiseComplaintModal onClose={() => setShowRaiseModal(false)} />
+        <RaiseComplaintModal
+          onClose={() => setShowRaiseModal(false)}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          selectedType={selectedType}
+          setSelectedType={setSelectedType}
+          selectedPriority={selectedPriority}
+          setSelectedPriority={setSelectedPriority}
+        />
       )}
 
       {selectedComplaint && (
@@ -183,31 +215,98 @@ const StatCard = ({ title, value, icon, gradient }: { title: string; value: numb
 );
 
 
-const RaiseComplaintModal = ({ onClose }: { onClose: () => void }) => {
+const RaiseComplaintModal = ({
+  onClose,
+  selectedCategory,
+  setSelectedCategory,
+  selectedType,
+  setSelectedType,
+  selectedPriority,
+  setSelectedPriority
+}: {
+  onClose: () => void;
+  selectedCategory: string;
+  setSelectedCategory: (value: string) => void;
+  selectedType: string;
+  setSelectedType: (value: string) => void;
+  selectedPriority: string;
+  setSelectedPriority: (value: string) => void;
+}) => {
+  function handleFile(_event: ChangeEvent<HTMLInputElement>): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-[#1A1A2E] border border-[#FFFFFF33] rounded-lg p-6 max-w-md w-full">
-        <h2 className={`${FONTSIZE[24]}`} style={{ fontWeight: WEIGHT.seven, color: COLORS.primary_white }}>
-          Raise New Complaint
-        </h2>
-        <p className={`${FONTSIZE[14]} mt-2 mb-4`} style={{ color: COLORS.secoundy_gray }}>
-          Please fill in the details below
-        </p>
-        <div className="space-y-4">
-          <input type="text" placeholder="Title" className="w-full bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-lg px-3 py-2" style={{ color: COLORS.primary_white }} />
-          <textarea placeholder="Description" className="w-full bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-lg px-3 py-2" style={{ color: COLORS.primary_white }}></textarea>
-          <select className="w-full bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-lg px-3 py-2" style={{ color: COLORS.primary_white }}>
-            <option>Select Category</option>
-            <option>Electrical</option>
-            <option>Plumbing</option>
-            <option>Carpentry</option>
-          </select>
+      <div className="bg-linear-to-r from-[#0A0A1E] to-[#0F0520] border border-[#00D3F280] rounded-2xl p-4 w-140 h-145 overflow-y-auto">
+        <div className="flex justify-between items-center mb-8 mt-2">
+          <h2 className={`${FONTSIZE[30]}`} style={{ fontWeight: WEIGHT.seven }}>
+            Raise New Complaint
+          </h2>
+          <button onClick={close} className=" p-2 rounded-full hover:bg-white/10 transition cursor-pointer">
+            <X size={18} className="text-gray-300" />
+          </button>
         </div>
-        <div className="flex gap-3 mt-6">
-          <button onClick={onClose} className="flex-1 bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-lg px-4 py-2" style={{ color: COLORS.primary_white }}>
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label htmlFor="complaint-title">Title *</label>
+              <input type="text" id="complaint-title" placeholder="Title" className="w-full bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-lg px-3 py-2 mt-1" />
+            </div>
+            <CustomDropdown
+              label="Type"
+              required
+              placeholder="Enter Type"
+              options={complaintTypes}
+              value={selectedType}
+              onChange={setSelectedType}
+            />
+            <CustomDropdown
+              label="Category"
+              required
+              placeholder="Select Category"
+              options={complaintCategories}
+              value={selectedCategory}
+              onChange={setSelectedCategory}
+            />
+            <CustomDropdown
+              label="Priority"
+              required
+              placeholder="Select Priority"
+              options={complaintPriority}
+              value={selectedPriority}
+              onChange={setSelectedPriority}
+            />
+          </div>
+          <div>
+            <label htmlFor="complaint-description">Description *</label>
+            <textarea id="complaint-description" placeholder="Provide detailed information about the issue..."
+              className="w-full bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-lg px-3 py-2"
+              style={{ color: COLORS.primary_white }}></textarea>
+          </div>
+          <div>
+            <label className="text-sm"> Upload Documents (Optional) </label><br />
+            <label className="upload-box">
+              <input type="file" hidden onChange={handleFile} />
+              <div className="flex flex-col items-center py-8 border rounded-2xl" style={{ color: COLORS.secoundy_gray }}>
+                <img src={cam} alt="" className="w-7 h-7 mb-2" />
+                <p className={`mt-1 ${FONTSIZE[14]} ${FONTWEIGHT[400]}`}>
+                  Click to upload or drag and drop
+                </p>
+                <p className={`mt-1 ${FONTSIZE[12]} ${FONTWEIGHT[400]}`}>
+                  PNG, JPG up to 5MB
+                </p>
+              </div>
+            </label><br />
+          </div>
+        </div>
+
+        <div className="flex gap-3 mt-3" style={{ fontWeight: WEIGHT.seven }}>
+          <button onClick={onClose} className="w-full bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-full px-4 py-2 cursor-pointer" >
             Cancel
           </button>
-          <button onClick={onClose} className="flex-1 bg-[#00B8DB] rounded-lg px-4 py-2" style={{ color: COLORS.primary_white, fontWeight: WEIGHT.seven }}>
+          <button onClick={onClose} className="w-full bg-linear-to-r from-[#00B8DB] to-[#7F22FE] rounded-full px-4 py-2 cursor-pointer"
+            style={{ boxShadow: "0px 8px 10px -6px #00B8DB40,0px 20px 25px -5px #00B8DB40" }}>
             Submit
           </button>
         </div>
@@ -299,7 +398,7 @@ const ComplaintCard = ({ complaint, onView, }: { complaint: Complaint; onView: (
         </div>
         <div className={`space-y-4 ${FONTSIZE[14]}`} style={{ fontWeight: WEIGHT.seven }}>
           <button onClick={onView}
-          className={`flex items-center gap-2 bg-[#00B8DB33] border border-[#00D3F24D] text-[#00D3F2] px-4 py-1 rounded-lg cursor-pointer`}>
+            className={`flex items-center gap-2 bg-[#00B8DB33] border border-[#00D3F24D] text-[#00D3F2] px-4 py-1 rounded-lg cursor-pointer`}>
             <EyeIcon size={16} /> View
           </button>
           <button className={`flex items-center gap-2 bg-[#FB2C3633] border border-[#FB2C364D] text-[#FB2C36] px-3 py-1 rounded-lg cursor-pointer`}>
