@@ -1,38 +1,5 @@
 import { useState, useRef, useEffect, type ReactNode } from "react";
-
-/**
- * CustomDropdown — reusable dropdown component
- *
- * Props:
- *  - label: string                    — field label above the dropdown
- *  - required: boolean                — shows * after label
- *  - placeholder: string              — placeholder text when nothing selected
- *  - options: Array<{
- *       value: string,                — the actual value stored/returned
- *       label: string,                — display text
- *       icon?: ReactNode              — optional icon before label
- *    }>
- *  - value: string                    — controlled selected value
- *  - onChange: (value: string) => void
- *  - className?: string               — extra class on wrapper
- *
- * Usage example:
- *
- *   const visitorTypes = [
- *     { value: "guest",    label: "Guest",       icon: <UserIcon /> },
- *     { value: "delivery", label: "Delivery",    icon: <TruckIcon /> },
- *     { value: "service",  label: "Service" },
- *   ];
- *
- *   <CustomDropdown
- *     label="Visitor Type"
- *     required
- *     placeholder="Select visitor type"
- *     options={visitorTypes}
- *     value={selectedType}
- *     onChange={setSelectedType}
- *   />
- */
+import { FONTSIZE, FONTWEIGHT } from "../../constent/uiconstent";
 
 interface DropdownOption {
   value: string;
@@ -60,11 +27,7 @@ const ChevronIcon = ({ open }: { open: boolean }) => (
     strokeWidth="2.5"
     strokeLinecap="round"
     strokeLinejoin="round"
-    style={{
-      transform: open ? "rotate(180deg)" : "rotate(0deg)",
-      transition: "transform 0.2s ease",
-      flexShrink: 0,
-    }}
+    className={`transition-transform duration-200 shrink-0 ${open ? "rotate-180" : "rotate-0"}`}
   >
     <polyline points="6 9 12 15 18 9" />
   </svg>
@@ -99,10 +62,9 @@ export function CustomDropdown({
 
   const selected = options.find((o) => o.value === value);
 
-  // Close on outside click
   useEffect(() => {
-    const handler = (e: any) => {
-      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+    const handler = (e: MouseEvent) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
     };
@@ -112,87 +74,48 @@ export function CustomDropdown({
 
   return (
     <div ref={wrapperRef} className={`relative ${className}`}>
+
+      {/* Label */}
       {label && (
-        <label
-          style={{
-            color: "#9CA3AF",
-            fontSize: "0.875rem",
-            display: "block",
-            marginBottom: "4px",
-          }}
-        >
+        <label className="block text-sm text-gray-400 mb-1">
           {label}
-          {required && (
-            <span style={{ color: "#60A5FA", marginLeft: "2px" }}>*</span>
-          )}
+          {required && <span className="text-blue-400 ml-0.5">*</span>}
         </label>
       )}
 
       {/* Trigger */}
       <div
         onClick={() => setOpen((p) => !p)}
-        style={{
-          width: "100%",
-          padding: "12px 14px",
-          background: "#FFFFFF0D",
-          border: `1px solid ${open ? "rgba(255,255,255,0.35)" : "#FFFFFF33"}`,
-          borderRadius: "10px",
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "10px",
-          color: selected ? "#ffffff" : "#6B7280",
-          fontSize: "0.9rem",
-          transition: "border-color 0.2s",
-          userSelect: "none",
-          boxSizing: "border-box",
-        }}
+        className={`
+          w-full px-3.5 py-3 rounded-[10px] cursor-pointer select-none
+          flex items-center justify-between gap-2.5
+          bg-[#FFFFFF0D] text-sm transition-colors duration-200
+          ${open ? "border border-white/35" : "border border-[#FFFFFF33]"}
+          ${selected ? "text-white" : "text-gray-500"}
+        `}
       >
-        <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <span className="flex items-center gap-2">
           {selected?.icon && (
-            <span
-              style={{
-                display: "flex",
-                alignItems: "center",
-                color: "#93C5FD",
-              }}
-            >
+            <span className="flex items-center text-blue-300">
               {selected.icon}
             </span>
           )}
           {selected ? selected.label : placeholder}
         </span>
-        <span style={{ color: "#6B7280" }}>
+        <span className="text-gray-500">
           <ChevronIcon open={open} />
         </span>
       </div>
 
       {/* Dropdown list */}
       {open && (
-        <div
-          style={{
-            position: "absolute",
-            top: "calc(100% + 6px)",
-            left: 0,
-            right: 0,
-            background: "#0C061E",
-            border: "1px solid #FFFFFF33",
-            borderRadius: "14px",
-            padding: "8px",
-            zIndex: 9999,
-            boxShadow: "0 12px 40px rgba(0,0,0,0.6)",
-            animation: "dropdownFadeIn 0.15s ease",
-          }}
-        >
+        <div className="absolute top-[calc(100%+6px)] left-0 right-0 z-[9999] bg-[#0C061E] border border-[#FFFFFF33] rounded-2xl p-2 shadow-[0_12px_40px_rgba(0,0,0,0.6)] animate-dropdown">
           <style>{`
             @keyframes dropdownFadeIn {
               from { opacity: 0; transform: translateY(-6px); }
               to   { opacity: 1; transform: translateY(0); }
             }
-            .dd-option:hover {
-              background: rgba(255,255,255,0.1) !important;
-            }
+            .animate-dropdown { animation: dropdownFadeIn 0.15s ease; }
           `}</style>
 
           {options.map((opt) => {
@@ -200,50 +123,26 @@ export function CustomDropdown({
             return (
               <button
                 key={opt.value}
-                className="dd-option"
-                onClick={() => {
-                  onChange(opt.value);
-                  setOpen(false);
-                }}
-                style={{
-                  width: "100%",
-                  padding: "11px 14px",
-                  borderRadius: "9px",
-                  border: "1px solid #FFFFFF33",
-                  background: isSelected
-                    ? "rgba(96,165,250,0.12)"
-                    : "#FFFFFF0D",
-                  color: isSelected ? "#93C5FD" : "#E5E7EB",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: "10px",
-                  fontSize: "0.875rem",
-                  marginBottom: "6px",
-                  transition: "background 0.15s",
-                  textAlign: "left",
-                  boxSizing: "border-box",
-                }}
+                onClick={() => { onChange(opt.value); setOpen(false); }}
+                className={`
+                  w-full px-3.5 py-2.5 mb-1.5 rounded-[9px] cursor-pointer
+                  flex items-center justify-center gap-2.5
+                  border border-[#FFFFFF33] transition-colors duration-150 ${FONTSIZE[16]} ${FONTWEIGHT[700]}
+                  ${isSelected
+                    ? "bg-blue-400/10"
+                    : "bg-[#FFFFFF0D] hover:bg-white/10"}
+                `}
               >
-                <span
-                  style={{ display: "flex", alignItems: "center", gap: "8px" }}
-                >
+                <span className="flex items-center justify-center gap-2">
                   {opt.icon && (
-                    <span
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        color: isSelected ? "#93C5FD" : "#9CA3AF",
-                      }}
-                    >
+                    <span className={`flex items-center ${isSelected ? "text-blue-300" : "text-gray-400"}`}>
                       {opt.icon}
                     </span>
                   )}
                   {opt.label}
                 </span>
                 {isSelected && (
-                  <span style={{ color: "#60A5FA" }}>
+                  <span className="text-blue-400 ml-auto">
                     <CheckIcon />
                   </span>
                 )}
@@ -256,175 +155,4 @@ export function CustomDropdown({
   );
 }
 
-// ─── Demo ──────────────────────────────────────────────────────────────────────
-
-const UserIcon = () => (
-  <svg
-    width="15"
-    height="15"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-    <circle cx="12" cy="7" r="4" />
-  </svg>
-);
-const TruckIcon = () => (
-  <svg
-    width="15"
-    height="15"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect x="1" y="3" width="15" height="13" />
-    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
-    <circle cx="5.5" cy="18.5" r="2.5" />
-    <circle cx="18.5" cy="18.5" r="2.5" />
-  </svg>
-);
-const WrenchIcon = () => (
-  <svg
-    width="15"
-    height="15"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-  </svg>
-);
-const CarIcon = () => (
-  <svg
-    width="15"
-    height="15"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v9a2 2 0 0 1-2 2h-2" />
-    <circle cx="7.5" cy="17.5" r="2.5" />
-    <circle cx="16.5" cy="17.5" r="2.5" />
-  </svg>
-);
-const HomeIcon = () => (
-  <svg
-    width="15"
-    height="15"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-    <polyline points="9 22 9 12 15 12 15 22" />
-  </svg>
-);
-
-const visitorTypeOptions = [
-  { value: "guest", label: "Guest", icon: <UserIcon /> },
-  { value: "delivery", label: "Delivery", icon: <TruckIcon /> },
-  { value: "service", label: "Service", icon: <WrenchIcon /> },
-  { value: "cabdriver", label: "Cab Driver", icon: <CarIcon /> },
-  { value: "contractor", label: "Contractor", icon: <WrenchIcon /> },
-  { value: "realestate", label: "Real Estate", icon: <HomeIcon /> },
-];
-
-const visitPurposeOptions = [
-  { value: "social", label: "Social Visit" },
-  { value: "pickup", label: "Delivery Pickup" },
-  { value: "food", label: "Food Delivery" },
-  { value: "maintenance", label: "Maintenance Work" },
-  { value: "cleaning", label: "Cleaning Services" },
-];
-
-export default function Demo() {
-  const [visitorType, setVisitorType] = useState("");
-  const [visitPurpose, setVisitPurpose] = useState("");
-
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#0b0c10",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "40px 20px",
-        fontFamily: "system-ui, sans-serif",
-        color: "#fff",
-      }}
-    >
-      <div
-        style={{
-          background: "#0C061E",
-          border: "1px solid #FFFFFF1A",
-          borderRadius: "18px",
-          padding: "32px",
-          width: "100%",
-          maxWidth: "520px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "20px",
-        }}
-      >
-        <h2 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 600 }}>
-          ➕ Add Expected Visitor
-        </h2>
-
-        <CustomDropdown
-          label="Visitor Type"
-          required
-          placeholder="Select visitor type"
-          options={visitorTypeOptions}
-          value={visitorType}
-          onChange={setVisitorType}
-        />
-
-        <CustomDropdown
-          label="Purpose of Visit"
-          required
-          placeholder="Select purpose"
-          options={visitPurposeOptions}
-          value={visitPurpose}
-          onChange={setVisitPurpose}
-        />
-
-        {/* Live output */}
-        {(visitorType || visitPurpose) && (
-          <div
-            style={{
-              background: "rgba(96,165,250,0.08)",
-              border: "1px solid rgba(96,165,250,0.25)",
-              borderRadius: "10px",
-              padding: "12px 16px",
-              fontSize: "0.8rem",
-              color: "#93C5FD",
-            }}
-          >
-            <strong>Selected values:</strong>
-            <pre style={{ margin: "6px 0 0", color: "#60A5FA" }}>
-              {JSON.stringify({ visitorType, visitPurpose }, null, 2)}
-            </pre>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
+export default CustomDropdown;

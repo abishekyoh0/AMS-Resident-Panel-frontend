@@ -1,10 +1,18 @@
 import { useState } from "react";
 import { COLORS, FONTSIZE, WEIGHT } from "../../constent/uiconstent";
 import { X } from "lucide-react";
+import CustomDropdown from "../common/custormdropdown";
 
 export default function PaymentModal({ invoice, close }: any) {
 
-    const [method, setMethod] = useState("UPI");
+    const [method] = useState("UPI");
+    const [selectedType, setSelectedType] = useState("UPI");
+
+    const PaymentModeOptions = [
+        { value: "UPI", label: "UPI" },
+        { value: "Cash", label: "Cash" },
+        { value: "Bank Transfer", label: "Bank Transfer" }
+    ]
 
     const payNow = () => {
         alert(`Payment successful using ${method}`);
@@ -27,19 +35,20 @@ export default function PaymentModal({ invoice, close }: any) {
                     <p className={`${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>Invoice: {invoice.id}</p>
                 </div>
 
-                <div>
-                    <p className={`mb-2 ${FONTSIZE[14]}`} style={{ fontWeight: WEIGHT.seven }}>Payment Method *</p>
-                    <select className="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl mb-4"
-                        onChange={(e) => setMethod(e.target.value)}>
-                        <option className="text-center">UPI</option>
-                        <option className="text-center">Cash</option>
-                        <option className="text-center">Bank Transfer</option>
-                    </select>
+                <div className="mb-3">
+                    <label htmlFor="payment-method">Payment Method *</label>
+                    <CustomDropdown
+                        required
+                        placeholder="Select payment method"
+                        options={PaymentModeOptions}
+                        value={selectedType}
+                        onChange={setSelectedType}
+                    />
                 </div>
 
                 <div>
                     <label htmlFor="">Amount *</label>
-                    <input type="number" placeholder={invoice.amount} className="w-full bg-gray-900 border border-gray-700 p-2 rounded-xl mb-1" />
+                    <input type="number" placeholder={invoice.amount} className="w-full bg-[#FFFFFF1A] border border-[#FFFFFF33] p-2 rounded-xl mb-1" />
                     <p className={`${FONTSIZE[12]}`} style={{ color: COLORS.secoundy_gray }}>Max: ${invoice.amount}</p>
                 </div>
 
