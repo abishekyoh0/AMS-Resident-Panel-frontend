@@ -83,7 +83,7 @@ const FamilyManagement: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-black via-[#0f0c29] to-[#1a1a2e] text-white p-4 md:p-8">
+    <div className="text-white">
 
       <div className="mb-6">
         <h1 className="text-3xl font-bold">

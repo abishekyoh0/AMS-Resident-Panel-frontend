@@ -15,6 +15,7 @@ import person from "../../assets/Visitor/person.png"
 import tools from "../../assets/Visitor/tools.png"
 import paper from "../../assets/Visitor/paper.png"
 import box from "../../assets/Visitor/box.png"
+
 export type Visitor = {
   id: number;
   name: string;
@@ -92,7 +93,7 @@ const VisitorManagement = () => {
 const [openModal, setOpenModal] = useState(false);
 
   return (
-    <div className="min-h-screen p-4 md:p-8 text-white bg-[#05060a]">
+    <div className="text-white">
 
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
 
