@@ -41,7 +41,7 @@ export default function AddVehicleModal({ setOpenModal }: Props) {
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50 p-4">
 
-            <div className="w-full max-w-xl overflow-y-auto h-125 bg-linear-to-r from-[#0A0A1E] to-[#0F0520] rounded-2xl border border-gray-700 p-8 shadow-2xl">
+            <div className="w-full max-w-3xl overflow-y-auto h-145 bg-linear-to-r from-[#0A0A1E] to-[#0F0520] rounded-2xl border border-gray-700 p-8 shadow-2xl">
                 <div className="flex justify-between items-center">
                     <h2 className="text-2xl font-semibold mb-6 flex items-center gap-4">
                         <img src={car} alt="" /> Add Vehicle
@@ -58,20 +58,21 @@ export default function AddVehicleModal({ setOpenModal }: Props) {
                         <label className="text-sm">Vehicle Number *</label><br /><br />
                         <input name="vehicleNumber" value={formData.vehicleNumber}
                             onChange={handleChange} placeholder="E.G., TN38 CW 2286"
-                            className="input p-2 border rounded-2xl w-full" required />
+                            className="input p-2 bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-2xl w-full" required />
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
                             <label className="text-sm">Vehicle Type *</label><br />
                             <input name="vehicleType" value={formData.vehicleType}
-                                onChange={handleChange} className="input p-2 border rounded-2xl w-full" required />
+                                onChange={handleChange} className="input p-2 bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-2xl w-full" required />
                         </div>
 
                         <div>
                             <label className="text-sm">Year *</label><br />
                             <input name="year" type="number" value={formData.year}
-                                onChange={handleChange} className="input p-2 border rounded-2xl w-full" required />
+                                onChange={handleChange} placeholder="2020"
+                                className="input p-2 bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-2xl w-full" required />
                         </div>
                     </div>
 
@@ -80,14 +81,14 @@ export default function AddVehicleModal({ setOpenModal }: Props) {
                             <label className="text-sm">Make *</label><br />
                             <input name="make" value={formData.make}
                                 onChange={handleChange} placeholder="e.g., Honda"
-                                className="input p-2 border rounded-2xl w-full" required />
+                                className="input p-2 bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-2xl w-full" required />
                         </div>
 
                         <div>
                             <label className="text-sm">Model *</label><br />
                             <input name="model" value={formData.model}
                                 onChange={handleChange} placeholder="e.g., Civic"
-                                className="input p-2 border rounded-2xl w-full" required />
+                                className="input p-2 bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-2xl w-full" required />
                         </div>
                     </div>
 
@@ -95,7 +96,7 @@ export default function AddVehicleModal({ setOpenModal }: Props) {
                         <label className="text-sm">Color *</label><br />
                         <input name="color" value={formData.color}
                             onChange={handleChange} placeholder="e.g., Silver"
-                            className="input p-2 border rounded-2xl w-full" required />
+                            className="input p-2 bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-2xl w-full" required />
                     </div>
 
                     <div>
@@ -104,7 +105,7 @@ export default function AddVehicleModal({ setOpenModal }: Props) {
                         <label className="upload-box">
                             <input type="file" hidden onChange={handleFile} />
 
-                            <div className="text-center p-2 border rounded-2xl">
+                            <div className="text-center p-2 bg-[#FFFFFF0D] border border-[#FFFFFF33]  rounded-2xl">
                                 📄
                                 <p className="text-sm mt-2">
                                     Registration & Insurance
