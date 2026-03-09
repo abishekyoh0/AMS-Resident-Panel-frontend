@@ -80,7 +80,7 @@ export default function VehicleManagement() {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <StatCard label="Total Vehicles" value={totalVehicles} image={Car} text="from-[#2B7FFF] to-[#00B8DB]" />
         <StatCard label="Active" value={activeVehicles} image={Mark} text="from-[#00C950] to-[#00BC7D]" />
         <StatCard label="With Parking" value={withParking} image={Parking} text="from-[#AD46FF] to-[#F6339A]" />
@@ -140,13 +140,15 @@ function StatCard({
 }) {
   return (
     <div className="bg-[#0E1215] border border-gray-700 rounded-xl p-5">
-      <div className="flex justify-between items-center">
-        <p className={`bg-linear-to-r ${text} bg-clip-text text-transparent mb-6 ${FONTSIZE[30]}`} style={{fontWeight: WEIGHT.seven}}>
+      <div className="flex justify-between items-center mb-6">
+        <p className={`bg-linear-to-r ${text} bg-clip-text text-transparent ${FONTSIZE[30]}`} style={{fontWeight: WEIGHT.seven}}>
           {value}
         </p>
         <img src={image} alt="" />
       </div>
-      <p className="text-gray-400 text-sm">{label}</p>
+      <p className={`${FONTSIZE[16]}`} style={{ color: COLORS.secoundy_gray }}>
+        {label}
+      </p>
     </div>
   );
 }
@@ -163,38 +165,40 @@ function VehicleCard({
   onDelete: () => void;
 }) {
   return (
-    <div className="bg-[#0E1215] border border-gray-700 rounded-xl p-6">
+    <div className="bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-2xl p-6">
       <div className="flex justify-between items-center">
         <div className="flex gap-3">
-          <img src={Car} alt="" />
+          <img src={Car} alt="" className="w-10 h-10" />
           <div>
-            <h2 className="font-semibold text-lg">{vehicle.number}</h2>
-            <p className="text-gray-400 text-sm">{vehicle.vehicleId}</p>
+            <div className="flex items-center gap-4">
+            <h2 className={`${FONTSIZE[24]}`} style={{fontWeight: WEIGHT.seven}}>{vehicle.number}</h2>
+            <p className={`${FONTSIZE[16]}`} style={{ fontWeight: WEIGHT.seven }}>
+              {vehicle.status === "Active" ? (
+                <span className="bg-[#00C95033] border border-[#00C95066] text-[#05DF72] rounded-full px-3 py-1">Active</span>
+              ) : (
+                <span className="bg-[#F0B10033] border border-[#F0B10066] text-[#FDC700] rounded-full px-3 py-1">Pending</span>
+              )}
+            </p>
+            </div>
+            <p className={`${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>
+              {vehicle.vehicleId}
+            </p>
           </div>
         </div>
 
-        <div className="flex gap-3">
-          <button
-            onClick={onView}
-            className="flex items-center gap-1 bg-cyan-600 px-3 py-2 rounded-lg text-sm"
-          >
-            <Eye size={14} />
+        <div className={`flex gap-3 ${FONTSIZE[14]}`} style={{ fontWeight: WEIGHT.seven }}>
+          <button onClick={onView} className="flex items-center gap-1 bg-[#00B8DB33] border border-[#00D3F24D] text-[#00D3F2] px-3 py-2 rounded-lg">
+            <Eye size={16} />
             View
           </button>
 
-          <button
-            onClick={onEdit}
-            className="flex items-center gap-1 bg-blue-600 px-3 py-2 rounded-lg text-sm"
-          >
-            <Pencil size={14} />
+          <button onClick={onEdit} className="flex items-center gap-1 bg-[#2B7FFF33] border border-[#51A2FF4D] text-[#51A2FF] px-3 py-2 rounded-lg">
+            <Pencil size={16} />
             Edit
           </button>
 
-          <button
-            onClick={onDelete}
-            className="flex items-center gap-1 bg-red-600 px-3 py-2 rounded-lg text-sm"
-          >
-            <Trash2 size={14} />
+          <button onClick={onDelete} className="flex items-center gap-1 bg-[#FF6B6B33] border border-[#FF6B6B4D] text-[#FF6B6B] px-3 py-2 rounded-lg">
+            <Trash2 size={16} />
             Remove
           </button>
         </div>
@@ -213,8 +217,12 @@ function VehicleCard({
 function Info({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="text-gray-400">{label}</p>
-      <p className="font-medium">{value}</p>
+      <p className={`mb-1 ${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>
+        {label}
+      </p>
+      <p className={`${FONTSIZE[16]}`} style={{ fontWeight: WEIGHT.seven }}>
+        {value}
+      </p>
     </div>
   );
 }
