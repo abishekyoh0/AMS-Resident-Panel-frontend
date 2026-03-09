@@ -1,6 +1,8 @@
 import type { Visitor } from "../../pages/VisitorManagement/VisitorManagement";
-import box from "../../assets/Visitor/box.png"
-import green from "../../assets/Visitor/green.png" 
+import { FONTSIZE, WEIGHT } from "../../constent/uiconstent";
+
+import box from "../../assets/Visitor/box.png";
+import green from "../../assets/Visitor/green.png";
 
 const InsideVisitors = ({ visitors }: { visitors: Visitor[] }) => {
   const inside = visitors.filter(v => v.status === "INSIDE");
@@ -19,13 +21,22 @@ const InsideVisitors = ({ visitors }: { visitors: Visitor[] }) => {
 
               <div className="flex items-start gap-3">
 
-                <div className="p-2 ">
-                  <img src={box} alt="box" className="w-10 h-10 " />
+                <div className="p-2">
+                  <img src={box} alt="box" className="w-10 h-10" />
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold mt-1">{v.name}</h3>
-                  <p className="text-xs text-gray-400">
+                  <h3
+                    className={`${FONTSIZE[24]} mt-1`}
+                    style={{ fontWeight: WEIGHT.six }}
+                  >
+                    {v.name}
+                  </h3>
+
+                  <p
+                    className={`text-gray-400 ${FONTSIZE[14]}`}
+                    style={{ fontWeight: WEIGHT.four }}
+                  >
                     ID: #{v.id}
                   </p>
                 </div>
@@ -33,8 +44,10 @@ const InsideVisitors = ({ visitors }: { visitors: Visitor[] }) => {
               </div>
 
               <span
-                className="text-xs px-3 py-1 rounded-full
-                bg-green-500/20 text-green-400 border border-green-400/30"
+                className={`px-3 py-1 rounded-full
+                bg-green-500/20 text-green-400 border border-green-400/30
+                ${FONTSIZE[14]}`}
+                style={{ fontWeight: WEIGHT.seven }}
               >
                 <img src={green} alt="green" className="w-3 h-3 inline-block mr-2" />
                 Currently Inside
@@ -45,23 +58,59 @@ const InsideVisitors = ({ visitors }: { visitors: Visitor[] }) => {
             <div className="grid md:grid-cols-3 gap-4 mt-5">
 
               <div className="bg-white/5 p-3 rounded-lg">
-                <p className="text-xs text-gray-400">Entry Time</p>
-                <p className="text-sm">{v.entryTime}</p>
+                <p
+                  className={`text-gray-400 ${FONTSIZE[12]}`}
+                  style={{ fontWeight: WEIGHT.four }}
+                >
+                  Entry Time
+                </p>
+
+                <p
+                  className={`${FONTSIZE[16]}`}
+                  style={{ fontWeight: WEIGHT.seven }}
+                >
+                  {v.entryTime}
+                </p>
               </div>
 
               <div className="bg-white/5 p-3 rounded-lg">
-                <p className="text-xs text-gray-400">Purpose</p>
-                <p className="text-sm">{v.purpose}</p>
+                <p
+                  className={`text-gray-400 ${FONTSIZE[12]}`}
+                  style={{ fontWeight: WEIGHT.four }}
+                >
+                  Purpose
+                </p>
+
+                <p
+                  className={`${FONTSIZE[16]}`}
+                  style={{ fontWeight: WEIGHT.seven }}
+                >
+                  {v.purpose}
+                </p>
               </div>
 
               <div className="bg-white/5 p-3 rounded-lg">
-                <p className="text-xs text-gray-400">Approved At</p>
-                <p className="text-sm text-green-400">02:29 PM</p>
+                <p
+                  className={`text-gray-400 ${FONTSIZE[12]}`}
+                  style={{ fontWeight: WEIGHT.four }}
+                >
+                  Approved At
+                </p>
+
+                <p
+                  className={`text-green-400 ${FONTSIZE[16]}`}
+                  style={{ fontWeight: WEIGHT.seven }}
+                >
+                  02:29 PM
+                </p>
               </div>
 
             </div>
 
-            <p className="text-xs text-gray-400 mt-4">
+            <p
+              className={`text-gray-400 mt-4 ${FONTSIZE[14]}`}
+              style={{ fontWeight: WEIGHT.four }}
+            >
               Security will record exit time when visitor leaves
             </p>
 

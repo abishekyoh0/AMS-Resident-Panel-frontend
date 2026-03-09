@@ -15,6 +15,7 @@ import person from "../../assets/Visitor/person.png"
 import tools from "../../assets/Visitor/tools.png"
 import paper from "../../assets/Visitor/paper.png"
 import box from "../../assets/Visitor/box.png"
+import { FONTSIZE, WEIGHT } from "../../constent/uiconstent";
 
 export type Visitor = {
   id: number;
@@ -98,26 +99,33 @@ const [openModal, setOpenModal] = useState(false);
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
 
   <div>
-    <h1 className="flex items-center gap-2 text-2xl font-bold">
-      <img src={hand} alt="hand" className="w-7 h-7" />
-      Visitor Management
-    </h1>
+  <h1
+  className={`flex items-center gap-2 text-white ${FONTSIZE[34]}`}
+  style={{ fontWeight: WEIGHT.seven }}
+>  
+  <img src={hand} alt="hand" className="w-7 h-7" />
+  Visitor Management
+</h1>
 
-    <p className="text-gray-400 text-sm mt-1">
-      Pre-register visitors and manage entry approvals
-    </p>
+    <p
+  className={`text-gray-400 mt-1 ${FONTSIZE[16]}`}
+  style={{ fontWeight: WEIGHT.four }}
+>
+  Pre-register visitors and manage entry approvals
+</p>
   </div>
 
   <button
-    onClick={() => setOpenModal(true)}
-    className="flex items-center gap-2 px-6 py-2.5 rounded-lg
-    bg-linear-to-r from-blue-500 to-cyan-400
-    hover:from-blue-600 hover:to-cyan-500
-    text-white font-medium shadow-lg shadow-blue-500/30 transition"
-  >
-    <Plus size={18} />
-    Add Expected Visitor
-  </button>
+  onClick={() => setOpenModal(true)}
+  className={`flex items-center gap-2 px-6 py-2.5 rounded-lg 
+  bg-linear-to-r from-blue-500 to-cyan-400 
+  hover:from-blue-600 hover:to-cyan-500 
+  text-white ${FONTSIZE[18]} shadow-lg shadow-blue-500/30 transition cursor-pointer`}
+  style={{ fontWeight: WEIGHT.six }}
+>
+  <Plus size={18} />
+  Add Expected Visitor
+</button>
 
 </div>
 
@@ -134,12 +142,13 @@ const [openModal, setOpenModal] = useState(false);
     <button
       key={t.value}
       onClick={() => setTab(t.value as any)}
-      className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm transition border cursor-pointer
+      className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm transition border ${FONTSIZE[16]} cursor-pointer
       ${
         tab === t.value
           ? `bg-linear-to-r ${t.bg}`
           : "bg-white/5 border-white/10 hover:bg-white/10 cursor-pointer"
-      }`}
+      }`}   style={{ fontWeight: WEIGHT.seven }}
+
     >
       <img src={t.icon} alt={t.label} className="w-4 h-4" />
       {t.label}
