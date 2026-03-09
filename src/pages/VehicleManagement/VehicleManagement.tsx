@@ -46,10 +46,17 @@ const initialVehicles: Vehicle[] = [
   },
 ];
 
+type DocumentType = {
+  name: string;
+  url: string;
+};
+
 export default function VehicleManagement() {
   const [vehicles, setVehicles] = useState<Vehicle[]>(initialVehicles);
   const [viewVehicle, setViewVehicle] = useState<Vehicle | null>(null);
   const [editVehicle, setEditVehicle] = useState<Vehicle | null>(null);
+  const [documents, setDocuments] = useState<DocumentType[]>([]);
+  const [fileName, setFileName] = useState('');
   const [openModal, setOpenModal] = useState(false);
 
   const totalVehicles = vehicles.length;
@@ -68,6 +75,21 @@ export default function VehicleManagement() {
       prev.map((v) => (v.id === updated.id ? updated : v))
     );
     setEditVehicle(null);
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      setFileName(file.name);
+
+      const newDocument = {
+        name: file.name,
+        url: URL.createObjectURL(file),
+      };
+
+      setDocuments((prev) => [...prev, newDocument]);
+    }
   };
 
   return (
@@ -113,6 +135,8 @@ export default function VehicleManagement() {
         <ViewVehicleModal
           vehicle={viewVehicle}
           close={() => setViewVehicle(null)}
+          documents={documents}
+          handleFileChange={handleFileChange}
         />
       )}
 
@@ -141,7 +165,7 @@ function StatCard({
   return (
     <div className="bg-[#0E1215] border border-gray-700 rounded-xl p-5">
       <div className="flex justify-between items-center mb-6">
-        <p className={`bg-linear-to-r ${text} bg-clip-text text-transparent ${FONTSIZE[30]}`} style={{fontWeight: WEIGHT.seven}}>
+        <p className={`bg-linear-to-r ${text} bg-clip-text text-transparent ${FONTSIZE[30]}`} style={{ fontWeight: WEIGHT.seven }}>
           {value}
         </p>
         <img src={image} alt="" />
@@ -171,14 +195,14 @@ function VehicleCard({
           <img src={Car} alt="" className="w-10 h-10" />
           <div>
             <div className="flex items-center gap-4">
-            <h2 className={`${FONTSIZE[24]}`} style={{fontWeight: WEIGHT.seven}}>{vehicle.number}</h2>
-            <p className={`${FONTSIZE[16]}`} style={{ fontWeight: WEIGHT.seven }}>
-              {vehicle.status === "Active" ? (
-                <span className="bg-[#00C95033] border border-[#00C95066] text-[#05DF72] rounded-full px-3 py-1">Active</span>
-              ) : (
-                <span className="bg-[#F0B10033] border border-[#F0B10066] text-[#FDC700] rounded-full px-3 py-1">Pending</span>
-              )}
-            </p>
+              <h2 className={`${FONTSIZE[24]}`} style={{ fontWeight: WEIGHT.seven }}>{vehicle.number}</h2>
+              <p className={`${FONTSIZE[16]}`} style={{ fontWeight: WEIGHT.seven }}>
+                {vehicle.status === "Active" ? (
+                  <span className="bg-[#00C95033] border border-[#00C95066] text-[#05DF72] rounded-full px-3 py-1">Active</span>
+                ) : (
+                  <span className="bg-[#F0B10033] border border-[#F0B10066] text-[#FDC700] rounded-full px-3 py-1">Pending</span>
+                )}
+              </p>
             </div>
             <p className={`${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>
               {vehicle.vehicleId}
@@ -205,24 +229,79 @@ function VehicleCard({
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-6 text-sm">
-        <Info label="Type" value={vehicle.type} />
-        <Info label="Make & Model" value={`${vehicle.make} ${vehicle.model}`} />
-        <Info label="Color" value={vehicle.color} />
-        <Info label="Year" value={vehicle.year.toString()} />
+        <div>
+          <p className={`mb-1 ${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>
+            Type
+          </p>
+          <p className={`${FONTSIZE[18]}`} style={{ fontWeight: WEIGHT.seven }}>
+            {vehicle.type}
+          </p>
+        </div>
+        <div>
+          <p className={`mb-1 ${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>
+            Make & Model
+          </p>
+          <p className={`${FONTSIZE[18]}`} style={{ fontWeight: WEIGHT.seven }}>
+            {vehicle.make} {vehicle.model}
+          </p>
+        </div>
+        <div>
+          <p className={`mb-1 ${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>
+            Color
+          </p>
+          <p className={`${FONTSIZE[18]}`} style={{ fontWeight: WEIGHT.seven }}>
+            {vehicle.color}
+          </p>
+        </div>
+        <div>
+          <p className={`mb-1 ${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>
+            Year
+          </p>
+          <p className={`${FONTSIZE[18]}`} style={{ fontWeight: WEIGHT.seven }}>
+            {vehicle.year.toString()}
+          </p>
+        </div>
+      </div>
+
+{vehicle.status === "Active" ? (
+  <div className="bg-[#00C9501A] border border-[#05DF724D] rounded-xl py-2 px-5 mt-4 w-3xl">
+    <div className="flex items-center gap-3">
+      <img src={Parking} alt="" className="w-10 h-10" />
+
+      <div>
+        <p
+          className={FONTSIZE[18]}
+          style={{ color: "#05DF72", fontWeight: WEIGHT.seven }}
+        >
+          Parking Assignment
+        </p>
+
+        <p
+          className={FONTSIZE[24]}
+          style={{ fontWeight: WEIGHT.seven }}
+        >
+          {vehicle.parking
+            ? vehicle.parking
+            : "No parking assigned yet."}
+        </p>
       </div>
     </div>
-  );
-}
+  </div>
+) : (
+  <div className="bg-[#F0B1001A] border border-[#FDC7004D] rounded-xl py-3 px-5 mt-4 w-3xl">
+      
+      <div className="flex justify-between items-center gap-5">
+        <p className={FONTSIZE[18]}
+          style={{ color: "#FDC700" }} >
+         ⚠ No parking assigned yet.
+        </p>
 
-function Info({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <p className={`mb-1 ${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>
-        {label}
-      </p>
-      <p className={`${FONTSIZE[16]}`} style={{ fontWeight: WEIGHT.seven }}>
-        {value}
-      </p>
+        <p className={`bg-[#F0B10033] border-2 border-[#FDC7004D] text-[#FDC700] px-2 py-1 rounded-lg  animate-pulse ${FONTSIZE[14]}`} style={{ fontWeight: WEIGHT.seven }} >
+          Request Parking
+        </p>
+      </div>
+  </div>
+)}
     </div>
   );
 }
@@ -230,30 +309,122 @@ function Info({ label, value }: { label: string; value: string }) {
 function ViewVehicleModal({
   vehicle,
   close,
+  documents,
+  handleFileChange,
 }: {
   vehicle: Vehicle;
   close: () => void;
+  documents: { name: string; url: string }[];
+  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
-    <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
-      <div className="bg-[#0E1215] w-125 p-6 rounded-xl border border-gray-700">
-        <div className="flex justify-between mb-4">
-          <h2 className="text-xl font-bold">Vehicle Details</h2>
-          <X onClick={close} className="cursor-pointer" />
+    <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50 p-4">
+      <div className="w-full max-w-3xl overflow-y-auto h-145 bg-linear-to-r from-[#0A0A1E] to-[#0F0520] rounded-2xl border border-gray-700 p-4 shadow-2xl">
+        <div className="flex justify-between items-center px-4 py-3">
+          <h2 className={`flex items-center gap-4 ${FONTSIZE[30]}`} style={{ fontWeight: WEIGHT.seven }}>
+            <img src={Car} alt="" /> Vehicle Details
+          </h2>
+          <button onClick={() => (close())}
+            className="text-gray-400 hover:text-white cursor-pointer mr-5">
+            <X />
+          </button>
+        </div>
+        <p className={`mb-3 px-4 ${FONTSIZE[14]}`} style={{ fontWeight: WEIGHT.seven }}>
+          {vehicle.vehicleId}
+        </p>
+
+        <div className={`bg-[#FFFFFF0D] border border-[#FFFFFF1A] rounded-xl p-5 mt-4 ${FONTSIZE[16]}`}>
+          <p className={`mb-4 ${FONTSIZE[20]}`} style={{ fontWeight: WEIGHT.seven }}>
+            {vehicle.number}
+          </p>
+          <div className="grid grid-cols-3 gap-3">
+            <div>
+              <p className={`mb-1 ${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>
+                Type
+              </p>
+              <p className={`${FONTSIZE[18]}`} style={{ fontWeight: WEIGHT.seven }}>
+                {vehicle.type}
+              </p>
+            </div>
+            <div>
+              <p className={`mb-1 ${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>
+                Make & Model
+              </p>
+              <p className={`${FONTSIZE[18]}`} style={{ fontWeight: WEIGHT.seven }}>
+                {vehicle.make} {vehicle.model}
+              </p>
+            </div>
+            <div>
+              <p className={`mb-1 ${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>
+                Color
+              </p>
+              <p className={`${FONTSIZE[18]}`} style={{ fontWeight: WEIGHT.seven }}>
+                {vehicle.color}
+              </p>
+            </div>
+            <div>
+              <p className={`mb-1 ${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>
+                Year
+              </p>
+              <p className={`${FONTSIZE[18]}`} style={{ fontWeight: WEIGHT.seven }}>
+                {vehicle.year.toString()}
+              </p>
+            </div>
+            <div>
+              <p className={`mb-1 ${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>
+                Status
+              </p>
+              <p className={`${FONTSIZE[18]}`} style={{ fontWeight: WEIGHT.seven }}>
+                {vehicle.status}
+              </p>
+            </div>
+            <div>
+              <p className={`mb-1 ${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>
+                Added Date
+              </p>
+              <p className={`${FONTSIZE[18]}`} style={{ fontWeight: WEIGHT.seven }}>
+                {vehicle.status === "Active" ? "2024-01-15" : "2024-06-10"}
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="space-y-3 text-sm">
-          <Info label="Number" value={vehicle.number} />
-          <Info label="Type" value={vehicle.type} />
-          <Info label="Make & Model" value={`${vehicle.make} ${vehicle.model}`} />
-          <Info label="Color" value={vehicle.color} />
-          <Info label="Year" value={vehicle.year.toString()} />
+        <div className={`bg-[#00C9501A] border border-[#05DF724D] rounded-xl p-5 mt-4`}>
+          <p className={`mb-1 ${FONTSIZE[18]}`} style={{ color: "#05DF72", fontWeight: WEIGHT.seven }}>
+            Parking Assignment
+          </p>
+          <div className="flex items-center gap-3">
+            <img src={Parking} alt="" className="w-10 h-10" />
+            <div>
+              <label htmlFor="" className={`${FONTSIZE[14]}`} style={{ color: COLORS.secoundy_gray }}>Assigned Slot</label>
+              <p className={`${FONTSIZE[24]}`} style={{ fontWeight: WEIGHT.seven }}>
+                {vehicle.parking ? ` ${vehicle.parking}` : "No parking assigned yet."}
+              </p>
+            </div>
+          </div>
         </div>
 
-        <button
-          onClick={close}
-          className="mt-6 w-full bg-linear-to-r from-blue-500 to-cyan-400 py-2 rounded-full"
-        >
+        <div className="my-6 bg-[#2B7FFF1A] border border-[#51A2FF4D] rounded-xl p-5">
+          <h3 className={`mb-4 ${FONTSIZE[18]}`} style={{ fontWeight: WEIGHT.seven, color: "#51A2FF" }}> Documents</h3>
+
+          <ul className="space-y-2">
+            {documents.map((doc, index) => (
+              <li key={index} className={`flex justify-between gap-3 bg-[#FFFFFF0D] rounded-lg p-3 items-center `}>
+                <span className={` ${FONTSIZE[16]}`}>{doc.name}</span>
+
+                <button className={`bg-[#2B7FFF33] border border-[#51A2FF4D] text-[#51A2FF] px-3 py-2 rounded-lg ${FONTSIZE[14]}`} style={{ fontWeight: WEIGHT.seven }}>
+                  <a href={doc.url} target="_blank" rel="document">
+                    View
+                  </a>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <button onClick={close}
+          className="px-6 py-3 w-full bg-linear-to-r from-[#2B7FFF] to-[#0092B8] rounded-full cursor-pointer"
+          style={{ boxShadow: "0px 8px 10px -6px #2B7FFF40,0px 20px 25px -5px #2B7FFF40" }}>
           Close
         </button>
       </div>
