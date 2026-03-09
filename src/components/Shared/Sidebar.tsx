@@ -44,7 +44,6 @@ export const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
           onClick={() => setIsOpen(false)}
         />
       )}
-
       <aside
         className={`fixed md:static  z-50 top-0 h-full left-0 w-60 p-4 bg-[#000000] transform transition-transform duration-300 overflow-x-auto no-scrollbar ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
         style={{ color: COLORS.primary_white }}
