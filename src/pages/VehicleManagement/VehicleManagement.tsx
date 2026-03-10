@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { Eye, Pencil, Trash2, Plus, X } from "lucide-react";
 import Car from "../../assets/VehicleManagement/car.png";
 import Mark from "../../assets/VehicleManagement/mark.png";
@@ -8,6 +8,8 @@ import { COLORS, FONTSIZE, FONTWEIGHT, WEIGHT } from "../../constent/uiconstent"
 import AddVehicleModal from "../../components/VehicleManagement/AddVehicle";
 
 type Vehicle = {
+  documentName: ReactNode;
+  documentUrl: string | undefined;
   id: string;
   number: string;
   vehicleId: string;
@@ -32,6 +34,8 @@ const initialVehicles: Vehicle[] = [
     color: "Silver",
     year: 2023,
     parking: "P-A-101",
+    documentName: undefined,
+    documentUrl: undefined
   },
   {
     id: "2",
@@ -43,6 +47,8 @@ const initialVehicles: Vehicle[] = [
     model: "Corolla",
     color: "Black",
     year: 2022,
+    documentName: undefined,
+    documentUrl: undefined
   },
 ];
 
@@ -211,17 +217,17 @@ function VehicleCard({
         </div>
 
         <div className={`flex gap-3 ${FONTSIZE[14]}`} style={{ fontWeight: WEIGHT.seven }}>
-          <button onClick={onView} className="flex items-center gap-1 bg-[#00B8DB33] border border-[#00D3F24D] text-[#00D3F2] px-3 py-2 rounded-lg">
+          <button onClick={onView} className="flex items-center gap-1 bg-[#00B8DB33] border border-[#00D3F24D] text-[#00D3F2] px-3 py-2 rounded-lg cursor-pointer">
             <Eye size={16} />
             View
           </button>
 
-          <button onClick={onEdit} className="flex items-center gap-1 bg-[#2B7FFF33] border border-[#51A2FF4D] text-[#51A2FF] px-3 py-2 rounded-lg">
+          <button onClick={onEdit} className="flex items-center gap-1 bg-[#2B7FFF33] border border-[#51A2FF4D] text-[#51A2FF] px-3 py-2 rounded-lg cursor-pointer">
             <Pencil size={16} />
             Edit
           </button>
 
-          <button onClick={onDelete} className="flex items-center gap-1 bg-[#FF6B6B33] border border-[#FF6B6B4D] text-[#FF6B6B] px-3 py-2 rounded-lg">
+          <button onClick={onDelete} className="flex items-center gap-1 bg-[#FF6B6B33] border border-[#FF6B6B4D] text-[#FF6B6B] px-3 py-2 rounded-lg cursor-pointer">
             <Trash2 size={16} />
             Remove
           </button>
@@ -263,45 +269,45 @@ function VehicleCard({
         </div>
       </div>
 
-{vehicle.status === "Active" ? (
-  <div className="bg-[#00C9501A] border border-[#05DF724D] rounded-xl py-2 px-5 mt-4 w-3xl">
-    <div className="flex items-center gap-3">
-      <img src={Parking} alt="" className="w-10 h-10" />
+      {vehicle.status === "Active" ? (
+        <div className="bg-[#00C9501A] border border-[#05DF724D] rounded-xl py-2 px-5 mt-4 w-3xl">
+          <div className="flex items-center gap-3">
+            <img src={Parking} alt="" className="w-10 h-10" />
 
-      <div>
-        <p
-          className={FONTSIZE[18]}
-          style={{ color: "#05DF72", fontWeight: WEIGHT.seven }}
-        >
-          Parking Assignment
-        </p>
+            <div>
+              <p
+                className={FONTSIZE[18]}
+                style={{ color: "#05DF72", fontWeight: WEIGHT.seven }}
+              >
+                Parking Assignment
+              </p>
 
-        <p
-          className={FONTSIZE[24]}
-          style={{ fontWeight: WEIGHT.seven }}
-        >
-          {vehicle.parking
-            ? vehicle.parking
-            : "No parking assigned yet."}
-        </p>
-      </div>
-    </div>
-  </div>
-) : (
-  <div className="bg-[#F0B1001A] border border-[#FDC7004D] rounded-xl py-3 px-5 mt-4 w-3xl">
-      
-      <div className="flex justify-between items-center gap-5">
-        <p className={FONTSIZE[18]}
-          style={{ color: "#FDC700" }} >
-         ⚠ No parking assigned yet.
-        </p>
+              <p
+                className={FONTSIZE[24]}
+                style={{ fontWeight: WEIGHT.seven }}
+              >
+                {vehicle.parking
+                  ? vehicle.parking
+                  : "No parking assigned yet."}
+              </p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="bg-[#F0B1001A] border border-[#FDC7004D] rounded-xl py-3 px-5 mt-4 w-3xl">
 
-        <p className={`bg-[#F0B10033] border-2 border-[#FDC7004D] text-[#FDC700] px-2 py-1 rounded-lg  animate-pulse ${FONTSIZE[14]}`} style={{ fontWeight: WEIGHT.seven }} >
-          Request Parking
-        </p>
-      </div>
-  </div>
-)}
+          <div className="flex justify-between items-center gap-5">
+            <p className={FONTSIZE[18]}
+              style={{ color: "#FDC700" }} >
+              ⚠ No parking assigned yet.
+            </p>
+
+            <p className={`bg-[#F0B10033] border-2 border-[#FDC7004D] text-[#FDC700] px-2 py-1 rounded-lg  animate-pulse ${FONTSIZE[14]}`} style={{ fontWeight: WEIGHT.seven }} >
+              Request Parking
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -453,47 +459,86 @@ function EditVehicleModal({
 
   return (
     <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
-      <div className="bg-[#0E1215] w-125 p-6 rounded-xl border border-gray-700">
-        <h2 className="text-xl font-bold mb-4">Edit Vehicle</h2>
+      <div className="w-full max-w-3xl overflow-y-auto h-145 bg-linear-to-r from-[#0A0A1E] to-[#0F0520] rounded-2xl border border-gray-700 p-8 shadow-2xl">
+        <div className="flex justify-between items-center">
+          <h2 className={`mb-6 flex items-center gap-4 ${FONTSIZE[30]}`} style={{ fontWeight: WEIGHT.seven }}>
+            <img src={Car} alt="" /> Edit Vehicle
+          </h2>
+          <button onClick={() => (close())}
+            className="text-gray-400 hover:text-white cursor-pointer mb-6">
+            <X />
+          </button>
+        </div>
 
         <div className="space-y-4">
-          <input
-            value={form.number}
-            onChange={(e) => handleChange("number", e.target.value)}
-            className="w-full bg-black border border-gray-700 p-2 rounded"
-          />
+          <div>
+            <label>Vehicle Number *</label><br />
+            <input value={form.number} onChange={(e) => handleChange("number", e.target.value)}
+              className="w-full bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-2xl mt-2 p-2"
+            />
+          </div>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label>Vehicle Type *</label><br />
+              <input name="vehicleType" value={form.type}
+                onChange={(e) => handleChange("type", e.target.value)} className="mt-2 p-2 bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-2xl w-full" required />
+            </div>
+            <div>
+              <label>Year *</label><br />
+              <input name="year" type="number" value={form.year}
+                onChange={(e) => handleChange("year", parseInt(e.target.value))} placeholder="2020"
+                className="mt-2 p-2 bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-2xl w-full" required />
+            </div>
+            <div>
+              <label>Make *</label><br />
+              <input
+                value={form.make}
+                onChange={(e) => handleChange("make", e.target.value)}
+                className="w-full bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-2xl mt-2 p-2"
+              />
+            </div>
+            <div>
+              <label>Model *</label><br />
+              <input
+                value={form.model}
+                onChange={(e) => handleChange("model", e.target.value)}
+                className="w-full bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-2xl mt-2 p-2"
+              />
+            </div>
+          </div>
+          <div>
+            <label>Color *</label><br />
+            <input
+              value={form.color}
+              onChange={(e) => handleChange("color", e.target.value)}
+              className="w-full bg-[#FFFFFF0D] border border-[#FFFFFF33] rounded-2xl mt-2 p-2"
+            />
+          </div>
+        </div>
 
-          <input
-            value={form.make}
-            onChange={(e) => handleChange("make", e.target.value)}
-            className="w-full bg-black border border-gray-700 p-2 rounded"
-          />
+        <div className="my-6 bg-[#2B7FFF1A] border border-[#51A2FF4D] rounded-xl p-5">
+          <h3 className={`mb-4 ${FONTSIZE[18]}`} style={{ fontWeight: WEIGHT.seven, color: "#51A2FF" }}> Documents</h3>
 
-          <input
-            value={form.model}
-            onChange={(e) => handleChange("model", e.target.value)}
-            className="w-full bg-black border border-gray-700 p-2 rounded"
-          />
+          <ul className="space-y-2">
+            <li className={`flex justify-between gap-3 bg-[#FFFFFF0D] rounded-lg p-3 items-center `}>
+              <span className={` ${FONTSIZE[16]}`}>{form.documentName}</span>
 
-          <input
-            value={form.color}
-            onChange={(e) => handleChange("color", e.target.value)}
-            className="w-full bg-black border border-gray-700 p-2 rounded"
-          />
+              <button className={`bg-[#2B7FFF33] border border-[#51A2FF4D] text-[#51A2FF] px-3 py-2 rounded-lg cursor-pointer ${FONTSIZE[14]}`} style={{ fontWeight: WEIGHT.seven }}>
+                <a href={form.documentUrl} target="_blank" rel="document">
+                  Upload
+                </a>
+              </button>
+            </li>
+          </ul>
         </div>
 
         <div className="flex gap-4 mt-6">
-          <button
-            onClick={close}
-            className="flex-1 bg-gray-700 py-2 rounded-full"
-          >
+          <button onClick={close} className="w-full px-6 py-3 bg-[#FFFFFF1A] border border-[#FFFFFF33] rounded-full cursor-pointer">
             Cancel
           </button>
 
-          <button
-            onClick={submit}
-            className="flex-1 bg-linear-to-r from-blue-500 to-cyan-400 py-2 rounded-full"
-          >
+          <button onClick={submit} className="w-full px-6 py-3 bg-linear-to-r from-[#2B7FFF] to-[#0092B8] rounded-full cursor-pointer"
+            style={{ boxShadow: "0px 8px 10px -6px #2B7FFF40,0px 20px 25px -5px #2B7FFF40" }}>
             Update Vehicle
           </button>
         </div>
