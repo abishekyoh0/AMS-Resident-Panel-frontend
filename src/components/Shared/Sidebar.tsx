@@ -25,6 +25,8 @@ const menuItems = [
   { to: "/visitors", label: "Visitors", icon: visitor, end: true },
   { to: "/entry-history", label: "Entry History", icon: entry, end: true },
   { to: "/emergency-alert", label: "Emergency Alerts", icon: emergency, end: true },
+    { to: "/access", label: "access", icon: visitor, end: true },
+
 ];
 
 type SidebarProps = {

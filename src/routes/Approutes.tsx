@@ -4,7 +4,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import NotFound from "../components/Shared/NotFound";
 import { PublicRoute } from "./PublicRoute";
 import { SignIn } from "../pages/Auth/Signin";
-import { Dashboard } from "../pages/Dashboard/Dashboard";
+import Dashboard from "../pages/Dashboard/Dashboard";
 import VehicleManagement from "../pages/VehicleManagement/VehicleManagement";
 import AddVehicle from "../components/VehicleManagement/AddVehicle";
 import FamilyTenants from "../pages/FamilyTenants/FamilyTenants"
@@ -12,6 +12,7 @@ import VisitorManagement from '../pages/VisitorManagement/VisitorManagement';
 import MyProfile from "../pages/Profile/profile";
 import Invoices from "../pages/Invoices/Invoices";
 import MyComplaints from "../pages/MyComplaints/MyComplaints";
+import Access from "../pages/Access/access";
 
 
 export default function AppRoutes() {
@@ -40,9 +41,11 @@ export default function AppRoutes() {
           <Route path="/my-profile" element={<MyProfile />} />
           <Route path="/my-complaints" element={<MyComplaints />} />
           <Route path="/invoices" element={<Invoices />} />
+          <Route path="/access" element={<Access />} />
+
           <Route path="/add-vehicle" element={<AddVehicle setOpenModal={function (): void {
             throw new Error("Function not implemented.");
-          } } />} />
+          }} />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
